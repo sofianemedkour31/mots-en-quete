@@ -1,0 +1,17 @@
+# Identifiants locaux et variables récupérées depuis Vercel
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Dépendances et fichiers générés
+node_modules/
+dist/
+coverage/
+*.log
+
+# Fichiers système et éditeurs
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

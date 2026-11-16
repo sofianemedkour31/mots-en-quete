@@ -1,0 +1,15 @@
+{
+  "name": "mots-en-quete",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "local": "node scripts/serveur-local.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
