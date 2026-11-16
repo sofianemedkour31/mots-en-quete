@@ -3,7 +3,7 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "functions": {
-    "api/albert.js": { "maxDuration": 60 }
+    "api/albert.js": { "maxDuration": 300 }
   },
   "headers": [
     {
