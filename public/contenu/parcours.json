@@ -3,10 +3,10 @@
   "parcours": [
     {
       "id": 1,
-      "nom": "Monde 1",
+      "nom": "Monde de Maissara",
       "couleur": "vert",
       "reglages": {
-        "niveau": "CE2",
+        "niveau": "CP",
         "deblocage": "progressif",
         "saisie": "clavier",
         "nbPhrasesBoss": 5
@@ -14,202 +14,63 @@
       "listes": [
         {
           "id": "exemple-son-o",
-          "titre": "Le son [o] : au, eau, ô",
+          "titre": "Dictée 1",
           "exemple": true,
           "valide": true,
           "mots": [
             {
-              "mot": "bateau",
-              "syllabes": "ba/teau",
+              "mot": "de la semoule",
+              "syllabes": "de la se/mou/le",
               "pieges": [
-                3,
-                4,
-                5
+                9,
+                10,
+                12
               ],
-              "astuce": "Le son [o] s'écrit « eau » à la fin du mot.",
-              "famille": "un bateau, des bateaux",
-              "phrase": "Le bateau glisse sur la mer."
+              "astuce": "Dans « semoule », le « ou » fait le son [u] et le « e » final reste muet.",
+              "famille": "semoule, semouler",
+              "phrase": "J'ai mangé du riz avec de la semoule ce soir."
             },
             {
-              "mot": "gâteau",
-              "syllabes": "gâ/teau",
+              "mot": "une mouche",
+              "syllabes": "u/ne mou/che",
               "pieges": [
-                1,
-                3,
-                4,
-                5
+                7,
+                8,
+                9
               ],
-              "astuce": "Un accent circonflexe sur le a, et « eau » à la fin.",
+              "astuce": "Le « ch » se prononce [ʃ] comme dans « chat » et le « e » final est muet.",
+              "famille": "mouche, moucher, mouchard",
+              "phrase": "Une mouche vole près de la fenêtre de la classe."
+            },
+            {
+              "mot": "du salami",
+              "syllabes": "du sa/la/mi",
+              "pieges": [],
+              "astuce": "Pas de piège, il s'écrit comme il se prononce.",
               "famille": "",
-              "phrase": "Maman coupe le gâteau."
+              "phrase": "Le goûter comprend du pain et du salami."
             },
             {
-              "mot": "château",
-              "syllabes": "châ/teau",
+              "mot": "ma salade",
+              "syllabes": "ma sa/la/de",
               "pieges": [
-                2,
-                4,
-                5,
-                6
+                8
               ],
-              "astuce": "Comme gâteau : « â » puis « eau ».",
-              "famille": "châtelain",
-              "phrase": "Le roi habite dans un château."
-            },
-            {
-              "mot": "chaud",
-              "syllabes": "chaud",
-              "pieges": [
-                2,
-                3,
-                4
-              ],
-              "astuce": "Le son [o] s'écrit « au ». Le d ne s'entend pas : pense à chaude.",
-              "famille": "chaude, chaleur",
-              "phrase": "Le thé est très chaud."
-            },
-            {
-              "mot": "autre",
-              "syllabes": "au/tre",
-              "pieges": [
-                0,
-                1
-              ],
-              "astuce": "Le son [o] s'écrit « au » au début du mot.",
-              "famille": "",
-              "phrase": "Prends une autre feuille."
-            },
-            {
-              "mot": "aussi",
-              "syllabes": "aus/si",
-              "pieges": [
-                0,
-                1,
-                2,
-                3
-              ],
-              "astuce": "« au » au début, puis deux s.",
-              "famille": "",
-              "phrase": "Moi aussi, j'aime le chocolat."
-            },
-            {
-              "mot": "beaucoup",
-              "syllabes": "beau/coup",
-              "pieges": [
-                1,
-                2,
-                3,
-                7
-              ],
-              "astuce": "C'est beau + coup ! Le p de la fin ne s'entend pas.",
-              "famille": "",
-              "phrase": "Il y a beaucoup de monde."
-            },
-            {
-              "mot": "tôt",
-              "syllabes": "tôt",
-              "pieges": [
-                1,
-                2
-              ],
-              "astuce": "Un accent circonflexe sur le o, et un t muet à la fin.",
-              "famille": "",
-              "phrase": "Je me lève tôt le matin."
+              "astuce": "Le « e » final de « salade » ne se prononce pas, il reste muet.",
+              "famille": "salade, saladier, salader",
+              "phrase": "Je mange ma salade avec des tomates fraîches."
             }
           ],
           "phrases": [
-            "Le bateau passe devant le château.",
-            "Il fait chaud, nous mangeons aussi un gâteau.",
-            "Je me lève tôt pour faire un autre gâteau.",
-            "Il y a beaucoup de soleil."
+            "Pour le dîner, j'ai préparé du riz avec de la semoule et des légumes.",
+            "Dans la cuisine, une mouche s'est posée sur le gâteau au chocolat.",
+            "Le pique-nique comprend du pain, du fromage, du salami et des fruits.",
+            "J'ai apporté ma salade, du poulet grillé et une petite vinaigrette.",
+            "Après le repas, nous avons rangé de la semoule, une mouche et du salami."
           ],
-          "etapes": {}
-        },
-        {
-          "id": "exemple-muettes",
-          "titre": "Les lettres muettes",
-          "exemple": true,
-          "valide": true,
-          "mots": [
-            {
-              "mot": "dent",
-              "syllabes": "dent",
-              "pieges": [
-                3
-              ],
-              "astuce": "Le t ne s'entend pas : pense à dentiste.",
-              "famille": "dentiste, dentier",
-              "phrase": "J'ai perdu une dent."
-            },
-            {
-              "mot": "gros",
-              "syllabes": "gros",
-              "pieges": [
-                3
-              ],
-              "astuce": "Le s ne s'entend pas : pense à grosse.",
-              "famille": "grosse, grossir",
-              "phrase": "Le chien est gros."
-            },
-            {
-              "mot": "petit",
-              "syllabes": "pe/tit",
-              "pieges": [
-                4
-              ],
-              "astuce": "Le t de la fin ne s'entend pas : pense à petite.",
-              "famille": "petite",
-              "phrase": "Mon petit frère dort."
-            },
-            {
-              "mot": "lait",
-              "syllabes": "lait",
-              "pieges": [
-                1,
-                2,
-                3
-              ],
-              "astuce": "Le son [è] s'écrit « ai ». Le t est muet : pense à laitier.",
-              "famille": "laitier, laitage",
-              "phrase": "Je bois un bol de lait."
-            },
-            {
-              "mot": "tapis",
-              "syllabes": "ta/pis",
-              "pieges": [
-                4
-              ],
-              "astuce": "Le s ne s'entend pas : pense à tapisserie.",
-              "famille": "tapisserie",
-              "phrase": "Le chat dort sur le tapis."
-            },
-            {
-              "mot": "long",
-              "syllabes": "long",
-              "pieges": [
-                3
-              ],
-              "astuce": "Le g ne s'entend pas : pense à longue.",
-              "famille": "longue, longueur",
-              "phrase": "Ce serpent est très long."
-            },
-            {
-              "mot": "sirop",
-              "syllabes": "si/rop",
-              "pieges": [
-                4
-              ],
-              "astuce": "Le p ne s'entend pas : pense à siroter.",
-              "famille": "siroter",
-              "phrase": "J'aime le sirop de fraise."
-            }
-          ],
-          "phrases": [
-            "Mon petit chat boit du lait sur le tapis.",
-            "Le gros serpent est très long.",
-            "Le sirop colle à ma dent."
-          ],
-          "etapes": {}
+          "etapes": {
+            "boss": true
+          }
         }
       ]
     },
@@ -249,5 +110,6 @@
       },
       "listes": []
     }
-  ]
+  ],
+  "publieLe": "2026-11-16T18:17:10.054Z"
 }
