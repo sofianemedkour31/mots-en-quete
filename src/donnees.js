@@ -87,17 +87,32 @@ export function preparerListe(liste) {
  * Renvoie [{ phrase, morceaux: [{ type, v, cible? }] }] — seules les phrases contenant au moins un mot.
  */
 export function phrasesBoss(liste, max = 5) {
-  const cibles = new Map(liste.mots.map((m) => [formeDictee(m.mot), m]));
+  // Une entrée peut être une expression (« une mouche », « gâteau au chocolat »).
+  // On compare les jetons complets pour éviter aussi « pain » dans « pains ».
+  const cibles = liste.mots.map((item) => ({
+    item,
+    jetons: jetons(item.mot),
+  })).filter((x) => x.jetons.length).sort((a, b) => b.jetons.length - a.jetons.length);
   const sources = (liste.phrases || []).filter(Boolean);
   const candidates = sources.length ? sources : liste.mots.map((m) => m.phrase).filter(Boolean);
   const out = [];
   for (const phrase of candidates) {
-    const morceaux = jetons(phrase).map((j) => {
-      if (j.type !== 'mot') return j;
-      const nu = j.v.replace(/'$/, '');
-      const item = cibles.get(formeDictee(nu));
-      return item ? { ...j, cible: item, apostrophe: j.v.endsWith("'") } : j;
-    });
+    const mots = jetons(phrase);
+    const morceaux = [];
+    for (let i = 0; i < mots.length;) {
+      const debut = mots[i];
+      const correspondance = debut.type === 'mot' && cibles.find(({ jetons: cible }) =>
+        cible.every((j, k) => {
+          const lu = mots[i + k];
+          return lu?.type === j.type && (formeDictee(lu.v) === formeDictee(j.v)
+            || (cible.length === 1 && lu.v.endsWith("'") && formeDictee(lu.v.slice(0, -1)) === formeDictee(j.v)));
+        }));
+      if (!correspondance) { morceaux.push(debut); i++; continue; }
+      const fin = i + correspondance.jetons.length;
+      const texte = mots.slice(i, fin).map((j) => j.v).join('');
+      morceaux.push({ type: 'mot', v: texte, cible: correspondance.item, apostrophe: texte.endsWith("'") });
+      i = fin;
+    }
     if (morceaux.some((m) => m.cible)) out.push({ phrase, morceaux });
     if (out.length >= max) break;
   }
