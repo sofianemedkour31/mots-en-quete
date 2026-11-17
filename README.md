@@ -39,7 +39,7 @@ Le Mange-Lettres a volé les lettres des mots de la semaine : l'élève les retr
    - une phrase de contexte.
 
    Il écrit aussi les phrases du boss. L'application vérifie sa réponse : les syllabes doivent recoller au mot, les pièges doivent exister dans le mot et chaque phrase doit contenir le mot.
-   Pour une longue liste, utilisez les boutons **Loupe**, **Pièges** et **Boss** séparément : chaque demande ne génère que les éléments nécessaires. Avant **Loupe**, cliquez sur les lettres des mots pour choisir les points difficiles en jaune ; Albert crée une astuce uniquement pour chaque point choisi. Photo-Flash et Dictée radio utilisent directement les mots saisis.
+   Pour une longue liste, utilisez les boutons **Loupe**, **Pièges** et **Boss** séparément : chaque demande ne génère que les éléments nécessaires. Avant **Loupe**, cliquez sur les lettres des mots pour choisir les points difficiles en jaune. Vérifiez les points proposés : vous pouvez les séparer ou les fusionner. La Loupe donne une astuce par point. Les formulations approuvées pour le `u` après `q`, le `e` final et la double consonne sont fixes ; les autres propositions d'Albert sont marquées **à valider**. Photo-Flash et Dictée radio utilisent directement les mots saisis.
 4. Relisez. **Cliquez sur les lettres** d'un mot pour marquer ou retirer un piège. Les syllabes se séparent par `/` (ex. `ba/teau`).
 5. Décochez si besoin une étape : elle est sautée.
 6. Cliquez sur **Valider cette liste**, puis sur **Publier pour les élèves** (ou **Exporter le fichier**).

@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { construireMessages, nettoyer, preparerPointsLoupe } from '../api/_lib/generation.js';
+import { regleLoupe } from '../src/lib/ortho.js';
+import { preparerListe } from '../src/donnees.js';
 import handler from '../api/albert.js';
 
 const demande = { titre: 'Les mots', mots: ['bateau', 'gâteau'], reglages: { nbPhrasesBoss: 2 } };
@@ -54,6 +56,46 @@ test('le nettoyage conserve seulement les données de l’activité demandée', 
   const sansPoint = nettoyer({ mots: [{ mot: 'bateau', astuce: 'Astuce inventée.', famille: 'bateaux' }] }, { mots: ['bateau'], mode: 'loupe' });
   assert.equal(sansPoint.mots[0].astuce, '');
   assert.equal(sansPoint.mots[0].famille, '');
+});
+
+test('afrique sépare u et e ; les règles validées restent exactes', () => {
+  const mots = ['afrique'];
+  const auto = preparerPointsLoupe(mots, [{ mot: 'afrique', indices: [5, 6] }]);
+  assert.deepEqual(auto[0].points, [{ debut: 5, lettres: 'u' }, { debut: 6, lettres: 'e' }]);
+  assert.equal(regleLoupe('afrique', auto[0].points[0]).texte, 'Après la lettre q, il y a un "u" muet.');
+  assert.equal(regleLoupe('afrique', auto[0].points[1]).texte, 'Le e final ne se prononce pas.');
+
+  const resultat = nettoyer({ mots: [{ mot: 'afrique', syllabes: 'a/fri/que', astuces: [
+    { debut: 5, lettres: 'u', texte: 'Texte libre ignoré.' },
+  ], phrase: 'Je regarde une carte de l afrique.' }] }, { mots, mode: 'loupe', pointsLoupe: auto });
+  assert.deepEqual(resultat.mots[0].astucesLoupe.map((a) => [a.lettres, a.texte, a.aValider]), [
+    ['u', 'Après la lettre q, il y a un "u" muet.', false],
+    ['e', 'Le e final ne se prononce pas.', false],
+  ]);
+  assert.equal(resultat.mots[0].astuce, 'Après la lettre q, il y a un "u" muet. Le e final ne se prononce pas.');
+
+  const corrige = preparerPointsLoupe(mots, [{ mot: 'afrique', indices: [5, 6], groupes: [[5, 6]] }]);
+  assert.deepEqual(corrige[0].points, [{ debut: 5, lettres: 'ue' }]);
+  assert.equal(regleLoupe('afrique', corrige[0].points[0]), null);
+});
+
+test('la double consonne exige les deux lettres jaunes', () => {
+  const deux = preparerPointsLoupe(['pomme'], [{ mot: 'pomme', indices: [2, 3] }]);
+  assert.deepEqual(deux[0].points, [{ debut: 2, lettres: 'mm' }]);
+  assert.equal(regleLoupe('pomme', deux[0].points[0]).texte, 'Attention à la double consonne.');
+  const une = preparerPointsLoupe(['pomme'], [{ mot: 'pomme', indices: [2] }]);
+  assert.equal(regleLoupe('pomme', une[0].points[0]), null);
+});
+
+test('une proposition à valider ne part pas dans la Loupe élève', () => {
+  const points = preparerPointsLoupe(['bateau'], [{ mot: 'bateau', indices: [3, 4, 5] }]);
+  const resultat = nettoyer({ mots: [{ mot: 'bateau', astuces: [
+    { debut: 3, lettres: 'eau', texte: 'Le groupe eau rappelle le son o.' },
+  ] }] }, { mots: ['bateau'], mode: 'loupe', pointsLoupe: points });
+  assert.equal(resultat.mots[0].astucesLoupe[0].aValider, true);
+  const pourEleve = preparerListe({ mots: resultat.mots });
+  assert.deepEqual(pourEleve.mots[0].astucesLoupe, []);
+  assert.equal(pourEleve.mots[0].astuce, '');
 });
 
 function reponse() {

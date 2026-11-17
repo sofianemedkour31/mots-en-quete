@@ -150,6 +150,49 @@ export function piegesAuto(mot) {
   return [...new Set(difficultes(mot).flatMap((d) => d.indices))].sort((a, b) => a - b);
 }
 
+/** Découpe les lettres sélectionnées en unités orthographiques, avec correction possible. */
+export function pointsLoupe(mot, selection, groupesManuels) {
+  const lettres = [...mot];
+  const indices = [...new Set((Array.isArray(selection) ? selection : [])
+    .filter((i) => Number.isInteger(i) && i >= 0 && i < lettres.length))].sort((a, b) => a - b);
+  const creerPoint = (groupe) => ({ debut: groupe[0], lettres: groupe.map((i) => lettres[i]).join('') });
+  const valide = Array.isArray(groupesManuels) && groupesManuels.length > 0
+    && groupesManuels.every((g) => Array.isArray(g) && g.length > 0 && g.every((i, k) =>
+      Number.isInteger(i) && (k === 0 || i === g[k - 1] + 1)))
+    && JSON.stringify(groupesManuels.flat()) === JSON.stringify(indices);
+  if (valide) return groupesManuels.map(creerPoint);
+
+  const graphies = difficultes(mot)
+    .filter((d) => d.indices.length > 1 && d.indices.every((i) => indices.includes(i)))
+    .sort((a, b) => b.indices.length - a.indices.length);
+  const points = [];
+  for (let k = 0; k < indices.length;) {
+    const i = indices[k];
+    const graphie = graphies.find((d) => d.indices[0] === i && d.indices.every((n, j) => indices[k + j] === n));
+    const groupe = graphie ? graphie.indices : [i];
+    points.push(creerPoint(groupe));
+    k += groupe.length;
+  }
+  return points;
+}
+
+/** Formulations approuvées par l'enseignant pour les pièges sans ambiguïté. */
+export function regleLoupe(mot, point) {
+  const lettres = [...mot.toLocaleLowerCase('fr-FR')];
+  const debut = point.debut;
+  const cible = point.lettres.toLocaleLowerCase('fr-FR');
+  if (cible === 'u' && lettres[debut - 1] === 'q' && /[eéèêëiîïy]/.test(lettres[debut + 1] || '')) {
+    return { type: 'u_apres_q', texte: 'Après la lettre q, il y a un "u" muet.' };
+  }
+  if (cible === 'e' && debut === lettres.length - 1 && lettres.length >= 3) {
+    return { type: 'e_final', texte: 'Le e final ne se prononce pas.' };
+  }
+  if (cible.length === 2 && cible[0] === cible[1] && /[bcdfghjklmnpqrstvwxz]/.test(cible[0])) {
+    return { type: 'consonne_double', texte: 'Attention à la double consonne.' };
+  }
+  return null;
+}
+
 export function astuceAuto(mot) {
   const d = difficultes(mot);
   if (!d.length) return 'Ce mot s\'écrit comme il se prononce : écoute bien chaque syllabe.';

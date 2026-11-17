@@ -70,11 +70,15 @@ export async function chargerPourEleve() {
 export function preparerListe(liste) {
   const mots = (liste.mots || []).filter((m) => m?.mot?.trim()).map((m) => {
     const mot = m.mot.trim();
+    const astucesLoupe = Array.isArray(m.astucesLoupe)
+      ? m.astucesLoupe.filter((a) => a?.texte && !a.aValider) : [];
     return {
       mot,
       syllabes: syllabesSures(mot, m.syllabes),
       pieges: (m.pieges || []).filter((i) => Number.isInteger(i) && i >= 0 && i < mot.length),
-      astuce: m.astuce || '',
+      astuce: Array.isArray(m.astucesLoupe) && m.astucesLoupe.length
+        ? astucesLoupe.map((a) => a.texte).join(' ') : m.astuce || '',
+      astucesLoupe,
       famille: m.famille || '',
       phrase: m.phrase || '',
     };

@@ -61,8 +61,10 @@ export function monterLoupe(zone, { liste, terminer }) {
       }
       if (item.pieges.length) remplir(message);
       explication.hidden = false;
+      const astuces = item.astucesLoupe?.length ? item.astucesLoupe.filter((a) => a.texte)
+        : item.astuce ? [{ texte: item.astuce }] : [];
       remplir(explication,
-        item.astuce ? el('p', { class: 'astuce' }, el('span', { class: 'astuce-titre' }, 'Astuce'), ' ', item.astuce, ' ', boutonEcouter(item.astuce, { taille: 'petit' })) : null,
+        astuces.map((a) => el('p', { class: 'astuce' }, el('span', { class: 'astuce-titre' }, a.lettres ? `Astuce « ${a.lettres} »` : 'Astuce'), ' ', a.texte, ' ', boutonEcouter(a.texte, { taille: 'petit' }))),
         item.famille ? el('p', { class: 'famille' }, el('span', { class: 'astuce-titre' }, 'Même famille'), ' ', item.famille, ' ', boutonEcouter(item.famille, { taille: 'petit' })) : null,
         el('p', { class: 'photo' }, '📸 Ferme les yeux et revois le mot dans ta tête. Épelle-le tout bas.'));
       remplir(suite, el('button', {

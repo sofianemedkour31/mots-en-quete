@@ -3,7 +3,7 @@
 import { el, vider, remplir } from '../ui.js';
 import { COULEURS, CLE_BROUILLON, CLE_APERCU, REGLAGES, ETAPES, chargerPublie, lireBrouillon, preparerListe, phrasesBoss } from '../donnees.js';
 import { propre, figureDans } from '../lib/texte.js';
-import { analyser, syllaber, SEPARATEUR } from '../lib/ortho.js';
+import { analyser, syllaber, pointsLoupe, SEPARATEUR } from '../lib/ortho.js';
 import { dire } from '../voix.js';
 
 const CLE_CODE = 'mq-studio-code';
@@ -202,7 +202,7 @@ export async function monterStudio(racine) {
             btnAlbert,
             el('p', { class: 'st-aide' }, 'Pour une longue liste, générez une activité à la fois : chaque réponse d’Albert sera plus courte.'),
             boutonActivite('loupe', 'Loupe · astuces ciblées'),
-            el('p', { class: 'st-aide' }, 'Pour la Loupe, cliquez sur les lettres des mots ci-dessous : les lettres jaunes sont les seuls points utilisés pour créer les astuces. Des lettres voisines forment un même point.'),
+            el('p', { class: 'st-aide' }, 'Pour la Loupe, cliquez sur les lettres des mots ci-dessous. Vérifiez les points proposés et corrigez leur séparation si nécessaire.'),
             boutonActivite('pieges', 'Pièges · lettres difficiles'),
             boutonActivite('boss', 'Boss · phrases'),
             el('button', { class: 'st-btn st-btn-clair', disabled: !l.mots.length, onclick: () => remplirAuto(l) }, 'Remplir sans Albert'),
@@ -269,6 +269,14 @@ export async function monterStudio(racine) {
       l.mots.map((x, i) => {
         const syllOk = String(x.syllabes || '').split(SEPARATEUR).join('') === x.mot;
         const phraseOk = !x.phrase || figureDans(x.mot, x.phrase);
+        const points = pointsLoupe(x.mot, x.pieges, x.groupesLoupe);
+        const groupes = points.map((p) => [...p.lettres].map((_, k) => p.debut + k));
+        const changerGroupes = (nouveaux) => {
+          x.groupesLoupe = nouveaux;
+          if (x.astucesLoupe?.length) { x.astucesLoupe = []; x.astuce = ''; }
+          l.valide = false;
+          sauver(); majEditeur();
+        };
         const lettres = el('div', { class: 'st-lettres', role: 'group', 'aria-label': `Lettres pièges de ${x.mot}` },
           [...x.mot].map((c, k) => el('button', {
             class: `st-lettre ${x.pieges.includes(k) ? 'piege' : ''} ${/[\s'-]/.test(c) ? 'blanc' : ''}`,
@@ -277,11 +285,42 @@ export async function monterStudio(racine) {
             disabled: enGeneration,
             onclick: (e) => {
               x.pieges = x.pieges.includes(k) ? x.pieges.filter((n) => n !== k) : [...x.pieges, k].sort((a, b) => a - b);
+              delete x.groupesLoupe;
+              if (x.astucesLoupe?.length) { x.astucesLoupe = []; x.astuce = ''; }
+              l.valide = false;
               e.currentTarget.classList.toggle('piege');
               e.currentTarget.setAttribute('aria-pressed', String(x.pieges.includes(k)));
-              sauver();
+              sauver(); majEditeur();
             },
           }, c)));
+        const panneauPoints = points.length ? el('div', { class: 'st-points' },
+          el('strong', {}, 'Points de la Loupe :'),
+          points.map((p, j) => el('div', { class: 'st-point' },
+            el('span', {}, `« ${p.lettres} »`),
+            groupes[j].length > 1 ? [...p.lettres].slice(1).map((_, k) => el('button', {
+              class: 'st-lien', type: 'button', disabled: enGeneration,
+              onclick: () => changerGroupes([
+                ...groupes.slice(0, j), groupes[j].slice(0, k + 1), groupes[j].slice(k + 1), ...groupes.slice(j + 1),
+              ]),
+            }, `Séparer après ${[...p.lettres][k]}`)) : null,
+            points[j + 1]?.debut === p.debut + [...p.lettres].length ? el('button', {
+              class: 'st-lien', type: 'button', disabled: enGeneration,
+              onclick: () => changerGroupes([
+                ...groupes.slice(0, j), [...groupes[j], ...groupes[j + 1]], ...groupes.slice(j + 2),
+              ]),
+            }, 'Fusionner avec le suivant') : null))) : null;
+        const astuces = x.astucesLoupe?.length ? el('div', { class: 'st-astuces' },
+          x.astucesLoupe.map((a) => el('div', { class: 'st-astuce' },
+            el('label', {}, `Astuce pour « ${a.lettres} » `, a.aValider ? el('em', { class: 'st-warn' }, 'à valider') : null,
+              el('input', { value: a.texte || '', oninput: (e) => {
+                a.texte = e.target.value; a.aValider = true;
+                x.astuce = x.astucesLoupe.map((t) => t.texte).filter(Boolean).join(' ');
+                l.valide = false; sauver();
+              }, onchange: () => majEditeur() })),
+            a.aValider ? el('button', { class: 'st-mini st-valider-astuce', type: 'button', title: `Valider l'astuce pour ${a.lettres}`, 'aria-label': `Valider l'astuce pour ${a.lettres}`,
+              onclick: () => { if (!a.texte?.trim()) return notifier('Écrivez une astuce avant de la valider.', 'erreur'); a.aValider = false; sauver(); majEditeur(); },
+            }, 'Valider') : null))) : el('label', { class: 'st-champ-court' }, 'Astuce (dite à l\'élève)',
+              el('input', { value: x.astuce || '', placeholder: 'Ex. : le t ne s\'entend pas : pense à petite.', oninput: (e) => { x.astuce = e.target.value; sauver(); } }));
         return el('div', { class: 'st-mot' },
           el('div', { class: 'st-mot-tete' },
             lettres,
@@ -289,13 +328,13 @@ export async function monterStudio(racine) {
               el('button', { class: 'st-mini', title: 'Écouter', onclick: () => dire(x.mot, { vitesse: 0.8 }) }, '▶'),
               el('button', { class: 'st-mini', title: 'Monter', disabled: i === 0, onclick: () => { [l.mots[i - 1], l.mots[i]] = [l.mots[i], l.mots[i - 1]]; sauver(); majEditeur(); } }, '↑'),
               el('button', { class: 'st-mini', title: 'Retirer', onclick: () => { l.mots.splice(i, 1); sauver(); majEditeur(); } }, '✕'))),
+          panneauPoints,
           el('div', { class: 'st-mot-champs' },
             el('label', { class: 'st-champ-court' }, el('span', {}, 'Syllabes ', !syllOk ? el('em', { class: 'st-warn' }, 'ne correspond pas au mot') : null),
               el('span', { class: 'st-avec-bouton' },
                 el('input', { value: x.syllabes || '', placeholder: syllaber(x.mot), oninput: (e) => { x.syllabes = e.target.value.trim(); sauver(); }, onchange: () => majEditeur() }),
                 el('button', { class: 'st-mini', title: 'Découpe automatique', onclick: () => { x.syllabes = syllaber(x.mot); sauver(); majEditeur(); } }, '↺'))),
-            el('label', { class: 'st-champ-court' }, 'Astuce (dite à l\'élève)',
-              el('input', { value: x.astuce || '', placeholder: 'Ex. : le t ne s\'entend pas : pense à petite.', oninput: (e) => { x.astuce = e.target.value; sauver(); } })),
+            astuces,
             el('label', { class: 'st-champ-court' }, 'Même famille (facultatif)',
               el('input', { value: x.famille || '', placeholder: 'Ex. : petite, petitesse', oninput: (e) => { x.famille = e.target.value; sauver(); } })),
             el('label', { class: 'st-champ-court' }, el('span', {}, 'Phrase pour l\'entendre en contexte ', !phraseOk ? el('em', { class: 'st-warn' }, 'ne contient pas le mot') : null),
@@ -337,7 +376,7 @@ export async function monterStudio(racine) {
       headers: { 'Content-Type': 'application/json', 'x-studio-code': code },
       body: JSON.stringify({
         titre: l.titre, mots: l.mots.map((x) => x.mot), reglages: mondeCourant().reglages, mode,
-        ...(mode === 'loupe' ? { selectionLoupe: l.mots.map((x) => ({ mot: x.mot, indices: x.pieges })) } : {}),
+        ...(mode === 'loupe' ? { selectionLoupe: l.mots.map((x) => ({ mot: x.mot, indices: x.pieges, groupes: x.groupesLoupe })) } : {}),
       }),
     });
     const j = await r.json().catch(() => ({ erreur: `Réponse illisible (${r.status}).` }));
@@ -350,7 +389,13 @@ export async function monterStudio(racine) {
       const parMot = new Map(resultat.mots.map((x) => [x.mot, x]));
       l.mots = l.mots.map((x) => {
         const proposition = parMot.get(x.mot) || {};
-        return mode === 'pieges' ? { ...x, pieges: proposition.pieges || x.pieges } : { ...x, ...proposition };
+        if (mode === 'pieges') {
+          const pieges = proposition.pieges || x.pieges;
+          return JSON.stringify(pieges) === JSON.stringify(x.pieges) ? x
+            : { ...x, pieges, groupesLoupe: undefined, astucesLoupe: [], astuce: '' };
+        }
+        return mode === 'complet' ? { ...x, ...proposition, groupesLoupe: undefined, astucesLoupe: [] }
+          : { ...x, ...proposition };
       });
     }
     if ((mode === 'complet' || mode === 'boss') && resultat.phrases?.length) l.phrases = resultat.phrases;
@@ -411,13 +456,15 @@ export async function monterStudio(racine) {
     if (l.mots.length < 2) manque.push('au moins 2 mots');
     const mauvaisesSyllabes = l.mots.filter((x) => String(x.syllabes || '').split(SEPARATEUR).join('') !== x.mot);
     if (mauvaisesSyllabes.length) manque.push(`des syllabes correctes pour : ${mauvaisesSyllabes.map((x) => x.mot).join(', ')}`);
+    const astucesAValider = l.mots.filter((x) => x.astucesLoupe?.some((a) => a.aValider));
+    if (astucesAValider.length) manque.push(`des astuces de la Loupe à valider pour : ${astucesAValider.map((x) => x.mot).join(', ')}`);
     if (manque.length) { notifier(`Il manque : ${manque.join(' ; ')}.`, 'erreur'); return; }
     const avertissements = [];
     const sansPhrase = l.mots.filter((x) => !x.phrase).length;
     if (sansPhrase) avertissements.push(`${sansPhrase} mot(s) sans phrase de contexte`);
     if (l.etapes?.boss !== false && !phrasesBoss(preparerListe(l), 1).length) avertissements.push('aucune phrase pour le boss (l\'étape sera fermée)');
     if (avertissements.length && !confirm(`À noter : ${avertissements.join(', ')}. Valider quand même ?`)) return;
-    l.mots = l.mots.map((x) => ({ mot: x.mot, syllabes: x.syllabes, pieges: x.pieges || [], astuce: (x.astuce || '').trim(), famille: (x.famille || '').trim(), phrase: (x.phrase || '').trim() }));
+    l.mots = l.mots.map((x) => ({ mot: x.mot, syllabes: x.syllabes, pieges: x.pieges || [], groupesLoupe: x.groupesLoupe, astucesLoupe: x.astucesLoupe, astuce: (x.astuce || '').trim(), famille: (x.famille || '').trim(), phrase: (x.phrase || '').trim() }));
     l.valide = true;
     delete l._alertes;
     sauver();

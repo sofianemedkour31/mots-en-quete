@@ -114,6 +114,14 @@ body.mode-studio {
 .st-lettre:hover { border-color: #2a1f45; }
 .st-lettre.piege { background: #ffec27; border-color: #ffa300; box-shadow: inset 0 -4px 0 #ffa300; }
 .st-lettre.blanc { min-width: 16px; border-style: dashed; }
+.st-points { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 10px; margin: 5px 0 9px; font-size: 13px; }
+.st-point { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 5px; padding: 3px 6px; border: 1px solid #d9d0c0; background: #fffbea; }
+.st-point .st-lien { font-size: 12px; }
+.st-astuces { display: flex; flex-direction: column; gap: 5px; }
+.st-astuce { display: flex; align-items: end; gap: 5px; }
+.st-astuce label { flex: 1; }
+.st-astuce input { display: block; width: 100%; }
+.st-valider-astuce { width: auto; padding: 0 8px; }
 .st-mot-champs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
 .st-avec-bouton { display: flex; gap: 6px; }
 .st-outils { display: flex; gap: 4px; }
