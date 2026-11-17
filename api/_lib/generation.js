@@ -6,7 +6,26 @@ export const REGLAGES_DEFAUT = { niveau: 'CE2', nbPhrasesBoss: 5 };
 
 export const MODES_ALBERT = ['complet', 'loupe', 'pieges', 'boss'];
 
-export function construireMessages({ titre, mots, reglages, mode = 'complet' }) {
+/** Regroupe les lettres jaunes voisines en points précis, sans accepter d'autres positions. */
+export function preparerPointsLoupe(mots, selection = []) {
+  const parMot = new Map((Array.isArray(selection) ? selection : [])
+    .filter((x) => x && typeof x.mot === 'string')
+    .map((x) => [x.mot, x.indices]));
+  return mots.map((mot) => {
+    const lettres = [...mot];
+    const indices = [...new Set((Array.isArray(parMot.get(mot)) ? parMot.get(mot) : [])
+      .filter((i) => Number.isInteger(i) && i >= 0 && i < lettres.length))].sort((a, b) => a - b);
+    const points = [];
+    for (const i of indices) {
+      const precedent = points.at(-1);
+      if (precedent && precedent.debut + [...precedent.lettres].length === i) precedent.lettres += lettres[i];
+      else points.push({ debut: i, lettres: lettres[i] });
+    }
+    return { mot, points };
+  });
+}
+
+export function construireMessages({ titre, mots, reglages, mode = 'complet', pointsLoupe = [] }) {
   const r = { ...REGLAGES_DEFAUT, ...(reglages || {}) };
   r.nbPhrasesBoss = Math.min(10, Math.max(1, Math.trunc(Number(r.nbPhrasesBoss) || 5)));
   const systeme = [
@@ -31,6 +50,10 @@ ${mots.map((m) => `- ${m}`).join('\n')}`;
     consignes = `${contexte}\n\n${consignesBoss}\n\nFormat attendu : {"phrases": ["…"]}`;
   } else if (mode === 'pieges') {
     consignes = `${contexte}\n\nPour chaque mot, donne :\n- "mot" : le mot exactement comme ci-dessus.\n${reglePieges}\n\nFormat attendu : {"mots": [{"mot": "…", "pieges": ["…"]}]}`;
+  } else if (mode === 'loupe') {
+    const selection = new Map(pointsLoupe.map((x) => [x.mot, x.points]));
+    const points = mots.map((mot) => `- ${mot} : ${JSON.stringify(selection.get(mot) || [])}`).join('\n');
+    consignes = `${contexte}\n\nL'enseignant a surligné uniquement les points difficiles suivants (debut = position de la première lettre, en commençant à 0) :\n${points}\n\nPour chaque mot, donne :\n- "mot" : recopie-le exactement.\n- "syllabes" : découpe-le avec / ; les morceaux recollés doivent redonner le mot.\n- "astuces" : une entrée pour chaque point surligné, avec exactement son "debut", ses "lettres" et un "texte" court (20 mots maximum) qui aide l'élève à retenir uniquement ce point. N'explique aucune autre difficulté orthographique. Si aucun point n'est surligné, renvoie [].\n- "famille" : un mot de la même famille seulement s'il explique un point surligné ; sinon chaîne vide.\n- "phrase" : une phrase simple de 6 à 12 mots qui contient le mot exactement.\n\nFormat attendu : {"mots": [{"mot": "…", "syllabes": "…/…", "astuces": [{"debut": 0, "lettres": "…", "texte": "…"}], "famille": "…", "phrase": "…"}]}`;
   } else {
     consignes = `${contexte}
 
@@ -65,13 +88,14 @@ export function lireJson(contenu) {
 }
 
 /** Vérifie et nettoie la proposition d'Albert. La liste de mots de l'enseignant fait foi. */
-export function nettoyer(brut, { mots, reglages, mode = 'complet' }) {
+export function nettoyer(brut, { mots, reglages, mode = 'complet', pointsLoupe = [] }) {
   const r = { ...REGLAGES_DEFAUT, ...(reglages || {}) };
   r.nbPhrasesBoss = Math.min(10, Math.max(1, Math.trunc(Number(r.nbPhrasesBoss) || 5)));
   const alertes = [];
   const proposes = new Map((Array.isArray(brut.mots) ? brut.mots : [])
     .filter((x) => x && typeof x === 'object')
     .map((x) => [propre(x.mot).toLocaleLowerCase('fr-FR'), x]));
+  const selection = new Map(pointsLoupe.map((x) => [x.mot, x.points]));
 
   const sortie = mode === 'boss' ? [] : mots.map((mot) => {
     const p = proposes.get(mot.toLocaleLowerCase('fr-FR')) || {};
@@ -97,11 +121,19 @@ export function nettoyer(brut, { mots, reglages, mode = 'complet' }) {
       alertes.push(`« ${mot} » : la phrase ne contient pas le mot, retirée.`);
       phrase = '';
     }
+    const points = selection.get(mot) || [];
+    const astuces = Array.isArray(p.astuces) ? p.astuces : [];
+    const textes = mode === 'loupe' ? points.map((point) => {
+      const trouvee = astuces.find((a) => a && a.debut === point.debut && a.lettres === point.lettres);
+      const texte = propre(trouvee?.texte).slice(0, 100);
+      if (!texte) alertes.push(`« ${mot} » : astuce manquante pour « ${point.lettres} ».`);
+      return texte;
+    }).filter(Boolean) : [];
     const proposition = {
       mot,
       syllabes,
-      astuce: propre(p.astuce).slice(0, 220) || astuceAuto(mot),
-      famille: propre(p.famille).slice(0, 80),
+      astuce: mode === 'loupe' ? textes.join(' ') : propre(p.astuce).slice(0, 220) || astuceAuto(mot),
+      famille: mode === 'loupe' && !points.length ? '' : propre(p.famille).slice(0, 80),
       phrase,
     };
     return mode === 'complet' ? { ...proposition, pieges } : proposition;

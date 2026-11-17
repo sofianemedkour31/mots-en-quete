@@ -201,7 +201,8 @@ export async function monterStudio(racine) {
             el('button', { class: 'st-btn', onclick: () => majMots(l, zoneMots.value) }, 'Mettre à jour les mots'),
             btnAlbert,
             el('p', { class: 'st-aide' }, 'Pour une longue liste, générez une activité à la fois : chaque réponse d’Albert sera plus courte.'),
-            boutonActivite('loupe', 'Loupe · syllabes et indices'),
+            boutonActivite('loupe', 'Loupe · astuces ciblées'),
+            el('p', { class: 'st-aide' }, 'Pour la Loupe, cliquez sur les lettres des mots ci-dessous : les lettres jaunes sont les seuls points utilisés pour créer les astuces. Des lettres voisines forment un même point.'),
             boutonActivite('pieges', 'Pièges · lettres difficiles'),
             boutonActivite('boss', 'Boss · phrases'),
             el('button', { class: 'st-btn st-btn-clair', disabled: !l.mots.length, onclick: () => remplirAuto(l) }, 'Remplir sans Albert'),
@@ -273,6 +274,7 @@ export async function monterStudio(racine) {
             class: `st-lettre ${x.pieges.includes(k) ? 'piege' : ''} ${/[\s'-]/.test(c) ? 'blanc' : ''}`,
             type: 'button',
             'aria-pressed': String(x.pieges.includes(k)),
+            disabled: enGeneration,
             onclick: (e) => {
               x.pieges = x.pieges.includes(k) ? x.pieges.filter((n) => n !== k) : [...x.pieges, k].sort((a, b) => a - b);
               e.currentTarget.classList.toggle('piege');
@@ -333,7 +335,10 @@ export async function monterStudio(racine) {
     const r = await fetch('/api/albert', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-studio-code': code },
-      body: JSON.stringify({ titre: l.titre, mots: l.mots.map((x) => x.mot), reglages: mondeCourant().reglages, mode }),
+      body: JSON.stringify({
+        titre: l.titre, mots: l.mots.map((x) => x.mot), reglages: mondeCourant().reglages, mode,
+        ...(mode === 'loupe' ? { selectionLoupe: l.mots.map((x) => ({ mot: x.mot, indices: x.pieges })) } : {}),
+      }),
     });
     const j = await r.json().catch(() => ({ erreur: `Réponse illisible (${r.status}).` }));
     if (!r.ok) throw new Error(j.erreur || `Erreur ${r.status}`);
@@ -354,12 +359,16 @@ export async function monterStudio(racine) {
   }
 
   async function generer(l, mode = 'complet') {
+    if (mode === 'loupe' && !l.mots.some((x) => x.pieges?.length)) {
+      notifier('Surlignez au moins une lettre difficile dans les mots avant de générer la Loupe.', 'erreur');
+      return;
+    }
     const dejaRempli = mode === 'boss' ? l.phrases.length
       : mode === 'pieges' ? l.mots.some((x) => x.pieges?.length)
         : l.mots.some((x) => x.phrase || x.famille);
     const remplacement = mode === 'boss' ? 'les phrases du Boss'
       : mode === 'pieges' ? 'les lettres pièges'
-        : mode === 'loupe' ? 'les syllabes et les indices' : 'les éléments de la liste et les phrases du Boss';
+        : mode === 'loupe' ? 'les syllabes, astuces et phrases de contexte' : 'les éléments de la liste et les phrases du Boss';
     if (dejaRempli && !confirm(`Remplacer ${remplacement} par la proposition d’Albert ?`)) return;
     enGeneration = true;
     majEditeur(); majColonne();

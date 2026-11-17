@@ -1,5 +1,5 @@
 // Relais vers l'API Albert : la clé reste côté serveur, jamais dans le navigateur.
-import { construireMessages, lireJson, nettoyer, MODES_ALBERT } from './_lib/generation.js';
+import { construireMessages, lireJson, nettoyer, MODES_ALBERT, preparerPointsLoupe } from './_lib/generation.js';
 import { codeValide, refuser, corps } from './_lib/acces.js';
 import { propre } from '../src/lib/texte.js';
 import { analyser, difficultes } from '../src/lib/ortho.js';
@@ -54,7 +54,7 @@ async function appelerAlbert(messages, mode) {
 }
 
 /** Réponse simulée pour tester sans clé (ALBERT_MOCK=1) : règles automatiques + phrases génériques. */
-function simulation(mots, reglages) {
+function simulation(mots, reglages, pointsLoupe = []) {
   const n = reglages?.nbPhrasesBoss || 5;
   const gabarits = ['Aujourd\'hui, je pense au mot {a}.', 'Dans mon cahier, j\'écris {a} et {b}.', 'La maîtresse dit {a} en souriant.'];
   const phrases = [];
@@ -64,7 +64,8 @@ function simulation(mots, reglages) {
   return JSON.stringify({
     mots: mots.map((m) => {
       const a = analyser(m);
-      return { mot: m, syllabes: a.syllabes, pieges: difficultes(m).map((d) => d.lettres), astuce: a.astuce, famille: '', phrase: `Voici le mot ${m} dans une phrase.` };
+      const points = pointsLoupe.find((x) => x.mot === m)?.points || [];
+      return { mot: m, syllabes: a.syllabes, pieges: difficultes(m).map((d) => d.lettres), astuce: a.astuce, astuces: points.map((p) => ({ ...p, texte: `Retiens « ${p.lettres} » dans « ${m} ».` })), famille: '', phrase: `Voici le mot ${m} dans une phrase.` };
     }),
     phrases,
   });
@@ -81,18 +82,22 @@ export default async function handler(req, res) {
   if (!mots.length) return refuser(res, 400, 'La liste ne contient aucun mot.');
   if (mots.length > 30) return refuser(res, 400, 'La liste est trop longue (30 mots maximum).');
   if (mots.some((m) => m.length > 40)) return refuser(res, 400, 'Un des mots est trop long.');
+  const pointsLoupe = mode === 'loupe' ? preparerPointsLoupe(mots, donnees.selectionLoupe) : [];
+  if (mode === 'loupe' && !pointsLoupe.some((x) => x.points.length)) {
+    return refuser(res, 400, 'Surlignez au moins une lettre difficile dans les mots avant de générer la Loupe.');
+  }
 
   try {
     let contenu; let model = 'simulation';
-    if (process.env.ALBERT_MOCK === '1') contenu = simulation(mots, reglages);
-    else ({ contenu, model } = await appelerAlbert(construireMessages({ titre, mots, reglages, mode }), mode));
+    if (process.env.ALBERT_MOCK === '1') contenu = simulation(mots, reglages, pointsLoupe);
+    else ({ contenu, model } = await appelerAlbert(construireMessages({ titre, mots, reglages, mode, pointsLoupe }), mode));
     let brut;
     try { brut = lireJson(contenu); }
     catch { return refuser(res, 502, 'Albert a renvoyé une réponse illisible. Réessayez ou choisissez une autre activité.'); }
     if (!brut || typeof brut !== 'object' || (mode === 'boss' ? !Array.isArray(brut.phrases) : !Array.isArray(brut.mots))) {
       return refuser(res, 502, 'Albert a renvoyé un format incomplet. Réessayez cette activité.');
     }
-    const resultat = nettoyer(brut, { mots, reglages, mode });
+    const resultat = nettoyer(brut, { mots, reglages, mode, pointsLoupe });
     res.status(200).json({ ...resultat, model });
   } catch (e) {
     refuser(res, e.statut || 500, e.message || 'Erreur inconnue.');
