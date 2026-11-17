@@ -93,106 +93,27 @@
           "valide": true,
           "mots": [
             {
-              "mot": "l'Afrique",
               "syllabes": "l'A/fri/que",
               "pieges": [
-                6,
+                2,
                 7,
                 8
               ],
-              "astucesLoupe": [],
-              "astuce": "",
+              "astuce": "Majuscule Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
               "famille": "",
-              "phrase": "L'Afrique possède de vastes savanes."
-            },
-            {
-              "mot": "le Mali",
-              "syllabes": "le Ma/li",
-              "pieges": [],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "",
-              "phrase": "Le Mali est un pays d'Afrique de l'Ouest."
-            },
-            {
-              "mot": "une cité",
-              "syllabes": "u/ne ci/té",
-              "pieges": [
-                7
-              ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "citadin",
-              "phrase": "Une cité historique attire de nombreux touristes."
-            },
-            {
-              "mot": "la terre",
-              "syllabes": "la terre",
-              "pieges": [
-                5,
-                6
-              ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "",
-              "phrase": "La terre tourne autour du soleil."
-            },
-            {
-              "mot": "un maçon",
-              "syllabes": "un ma/çon",
-              "pieges": [
-                5
-              ],
+              "phrase": "L'Afrique possède de magnifiques paysages naturels.",
+              "mot": "l'Afrique",
               "astucesLoupe": [
                 {
-                  "debut": 5,
-                  "lettres": "ç",
-                  "texte": "Le ç se prononce [s]",
+                  "debut": 2,
+                  "lettres": "A",
+                  "texte": "Majuscule",
                   "aValider": false
-                }
-              ],
-              "astuce": "Le ç se prononce [s]",
-              "famille": "maçonnerie",
-              "phrase": "Un maçon construit des murs solides."
-            },
-            {
-              "mot": "une année",
-              "syllabes": "u/ne an/né/e",
-              "pieges": [
-                5,
-                6,
-                7
-              ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "",
-              "phrase": "Une année compte douze mois."
-            },
-            {
-              "mot": "une équipe",
-              "syllabes": "u/ne é/qui/pe",
-              "pieges": [
-                4,
-                5,
-                6
-              ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "équiper",
-              "phrase": "Une équipe gagne quand elle travaille ensemble."
-            },
-            {
-              "mot": "la façade",
-              "syllabes": "la fa/çade",
-              "pieges": [
-                5,
-                8
-              ],
-              "astucesLoupe": [
+                },
                 {
-                  "debut": 5,
-                  "lettres": "ç",
-                  "texte": "Le ç donne le son [s]",
+                  "debut": 7,
+                  "lettres": "u",
+                  "texte": "Après la lettre q, il y a un \"u\" muet.",
                   "aValider": false
                 },
                 {
@@ -201,57 +122,122 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le ç donne le son [s] Le e final ne se prononce pas.",
-              "famille": "façadier",
-              "phrase": "La façade du bâtiment est très décorée."
+              ]
             },
             {
-              "mot": "un bâtiment",
-              "syllabes": "un bâ/ti/ment",
+              "syllabes": "le Ma/li",
+              "pieges": [
+                3
+              ],
+              "astuce": "Majuscule",
+              "famille": "",
+              "phrase": "Le Mali est un pays d'Afrique de l'Ouest.",
+              "mot": "le Mali",
+              "astucesLoupe": []
+            },
+            {
+              "syllabes": "u/ne ci/té",
               "pieges": [
                 4
               ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "bâtir",
-              "phrase": "Un bâtiment moderne se dresse au centre-ville."
+              "astuce": "Le c se prononce [s] devant e, i, y.",
+              "famille": "",
+              "phrase": "Une cité ancienne attire les touristes curieux.",
+              "mot": "une cité",
+              "astucesLoupe": [
+                {
+                  "debut": 4,
+                  "lettres": "c",
+                  "texte": "Le c se prononce [s] devant e, i, y.",
+                  "aValider": false
+                }
+              ]
             },
             {
-              "mot": "le désert",
-              "syllabes": "le dé/sert",
-              "pieges": [
-                4
-              ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "désertique",
-              "phrase": "Le désert est très chaud en été."
-            },
-            {
-              "mot": "menacer",
-              "syllabes": "me/na/cer",
-              "pieges": [
-                4,
-                5
-              ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "menace",
-              "phrase": "Il ne faut pas menacer les autres."
-            },
-            {
-              "mot": "incroyable",
-              "syllabes": "in/croy/a/ble",
+              "syllabes": "la ter/re",
               "pieges": [
                 5,
-                9
+                6,
+                7
               ],
+              "astuce": "Attention à la double consonne. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "La terre tourne autour du soleil chaque jour.",
+              "mot": "la terre",
               "astucesLoupe": [
                 {
                   "debut": 5,
-                  "lettres": "y",
-                  "texte": "Le y ici représente le son [i].",
+                  "lettres": "rr",
+                  "texte": "Attention à la double consonne.",
+                  "aValider": false
+                },
+                {
+                  "debut": 7,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "un ma/çon",
+              "pieges": [
+                5
+              ],
+              "astuce": "Le ç se prononce [s].",
+              "famille": "",
+              "phrase": "Un maçon construit des murs solides pour la maison.",
+              "mot": "un maçon",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "ç",
+                  "texte": "Le ç se prononce [s].",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "u/ne an/née",
+              "pieges": [
+                5,
+                6,
+                8
+              ],
+              "astuce": "Attention à la double consonne. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "Une année compte douze mois et de nombreuses fêtes.",
+              "mot": "une année",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "nn",
+                  "texte": "Attention à la double consonne.",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "u/ne é/qui/pe",
+              "pieges": [
+                6,
+                9
+              ],
+              "astuce": "Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "Une équipe gagne quand tous jouent ensemble.",
+              "mot": "une équipe",
+              "astucesLoupe": [
+                {
+                  "debut": 6,
+                  "lettres": "u",
+                  "texte": "Après la lettre q, il y a un \"u\" muet.",
                   "aValider": false
                 },
                 {
@@ -260,40 +246,175 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le y ici représente le son [i]. Le e final ne se prononce pas.",
-              "famille": "croyance",
-              "phrase": "Ce tour de magie est incroyable."
+              ]
             },
             {
-              "mot": "voici",
+              "syllabes": "la fa/ça/de",
+              "pieges": [
+                5,
+                8
+              ],
+              "astuce": "le ç se prononce [s] Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "La façade du théâtre est décorée de sculptures.",
+              "mot": "la façade",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "ç",
+                  "texte": "le ç se prononce [s]",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "un bâ/ti/ment",
+              "pieges": [
+                4,
+                8,
+                9,
+                10
+              ],
+              "astuce": "attention à l'accent En de 30 Le t final est muet",
+              "famille": "bâtir",
+              "phrase": "Un bâtiment moderne se dresse au centre de la ville.",
+              "mot": "un bâtiment",
+              "groupesLoupe": [
+                [
+                  4
+                ],
+                [
+                  8,
+                  9
+                ],
+                [
+                  10
+                ]
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 4,
+                  "lettres": "â",
+                  "texte": "attention à l'accent",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "en",
+                  "texte": "En de 30",
+                  "aValider": false
+                },
+                {
+                  "debut": 10,
+                  "lettres": "t",
+                  "texte": "Le t final est muet",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "le dé/sert",
+              "pieges": [
+                5,
+                8
+              ],
+              "astuce": "Le s entre deux consonnes se prononce [z]  Le t final est muet",
+              "famille": "",
+              "phrase": "Le désert s'étend à perte de vue sous le soleil.",
+              "mot": "le désert",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "s",
+                  "texte": "Le s entre deux consonnes se prononce [z] ",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "t",
+                  "texte": "Le t final est muet",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "me/na/cer",
+              "pieges": [
+                4
+              ],
+              "astuce": "Le c devant e se prononce [s]",
+              "famille": "",
+              "phrase": "Menacer quelqu'un n'est jamais une bonne solution.",
+              "mot": "menacer",
+              "astucesLoupe": [
+                {
+                  "debut": 4,
+                  "lettres": "c",
+                  "texte": "Le c devant e se prononce [s]",
+                  "aValider": false
+                }
+              ]
+            },
+            {
+              "syllabes": "in/cro/ya/ble",
+              "pieges": [
+                5,
+                9
+              ],
+              "astuce": "Le y ici vaut le son [i]. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "Ce tour de magie est vraiment incroyable pour tous.",
+              "mot": "incroyable",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "y",
+                  "texte": "Le y ici vaut le son [i].",
+                  "aValider": false
+                },
+                {
+                  "debut": 9,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ]
+            },
+            {
               "syllabes": "vo/i/ci",
               "pieges": [
                 3
               ],
+              "astuce": "Le c devant i se prononce [s]",
+              "famille": "",
+              "phrase": "Voici le livre que tu attendais depuis hier.",
+              "mot": "voici",
               "astucesLoupe": [
                 {
                   "debut": 3,
                   "lettres": "c",
-                  "texte": "Le c devant i se prononce [s].",
+                  "texte": "Le c devant i se prononce [s]",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le c devant i se prononce [s].",
-              "famille": "voix",
-              "phrase": "Voici le livre que tu attendais."
+              ]
             },
             {
-              "mot": "chaque",
               "syllabes": "cha/que",
               "pieges": [
-                3,
-                4
+                4,
+                5
               ],
-              "astucesLoupe": [],
-              "astuce": "",
+              "astuce": "attention aux lettres muettes",
               "famille": "",
-              "phrase": "Chaque élève doit rendre son devoir."
+              "phrase": "Chaque élève doit rendre son devoir avant midi.",
+              "mot": "chaque",
+              "astucesLoupe": []
             }
           ],
           "phrases": [
@@ -317,38 +438,103 @@
               "syllabes": "un siè/cle",
               "pieges": [
                 5,
-                6,
-                7,
                 8
               ],
-              "astucesLoupe": [],
-              "astuce": "",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "è",
+                  "texte": "Attention à l'accent sur le è.",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Attention à l'accent sur le è. Le e final ne se prononce pas.",
               "famille": "",
-              "phrase": "Ce tableau date d'un siècle ancien."
+              "phrase": "Un siècle passe très vite."
             },
             {
               "mot": "un habitant",
               "syllabes": "un ha/bi/tant",
               "pieges": [
                 3,
+                8,
+                9,
                 10
               ],
-              "astucesLoupe": [],
-              "astuce": "",
+              "groupesLoupe": [
+                [
+                  3
+                ],
+                [
+                  8,
+                  9
+                ],
+                [
+                  10
+                ]
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 3,
+                  "lettres": "h",
+                  "texte": "Le h de habitant est muet",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "an",
+                  "texte": "Le an de quarante (40).",
+                  "aValider": false
+                },
+                {
+                  "debut": 10,
+                  "lettres": "t",
+                  "texte": "Attention au t muet à la fin.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le h de habitant est muet Le an de quarante (40). Attention au t muet à la fin.",
               "famille": "habiter",
-              "phrase": "Un habitant de la ville aime le parc."
+              "phrase": "Un habitant vit dans ce village."
             },
             {
               "mot": "le passage",
               "syllabes": "le pas/sa/ge",
               "pieges": [
                 5,
-                6
+                6,
+                8,
+                9
               ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "passer",
-              "phrase": "Le passage secret mène au grenier."
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "ss",
+                  "texte": "Attention à la double consonne.",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "g",
+                  "texte": "Le g fait le son [j] car il est devant e, i ou y.",
+                  "aValider": false
+                },
+                {
+                  "debut": 9,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Attention à la double consonne. Le g fait le son [j] car il est devant e, i ou y. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "Le passage est étroit ici."
             },
             {
               "mot": "un commerçant",
@@ -356,32 +542,105 @@
               "pieges": [
                 5,
                 6,
-                9
+                9,
+                10,
+                11,
+                12
               ],
-              "astucesLoupe": [],
-              "astuce": "",
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "mm",
+                  "texte": "Attention à la double consonne.",
+                  "aValider": false
+                },
+                {
+                  "debut": 9,
+                  "lettres": "ç",
+                  "texte": "Le ç se prononce [s] ",
+                  "aValider": false
+                },
+                {
+                  "debut": 10,
+                  "lettres": "an",
+                  "texte": "Le an de quarante (40).",
+                  "aValider": false
+                },
+                {
+                  "debut": 12,
+                  "lettres": "t",
+                  "texte": "Attention au t muet à la fin.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Attention à la double consonne. Le ç se prononce [s]  Le an de quarante (40). Attention au t muet à la fin.",
               "famille": "commerce",
-              "phrase": "Un commerçant vend des fruits au marché."
+              "phrase": "Un commerçant vend des fruits."
             },
             {
               "mot": "un lieu",
               "syllabes": "un lieu",
-              "pieges": [],
-              "astucesLoupe": [],
-              "astuce": "",
+              "pieges": [
+                5,
+                6
+              ],
+              "groupesLoupe": [
+                [
+                  5,
+                  6
+                ]
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "eu",
+                  "texte": "attention à la lettre muette",
+                  "aValider": false
+                }
+              ],
+              "astuce": "attention à la lettre muette",
               "famille": "",
-              "phrase": "Ce parc est un lieu de détente."
+              "phrase": "Un lieu calme attire les artistes."
             },
             {
               "mot": "la tolérance",
               "syllabes": "la to/lé/ran/ce",
               "pieges": [
-                6
+                6,
+                8,
+                9,
+                10,
+                11
               ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "tolérer",
-              "phrase": "La tolérance aide à vivre ensemble."
+              "astucesLoupe": [
+                {
+                  "debut": 6,
+                  "lettres": "é",
+                  "texte": "Attention à l'accent sur le é.",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "an",
+                  "texte": "Le an de quarante (40).",
+                  "aValider": false
+                },
+                {
+                  "debut": 10,
+                  "lettres": "c",
+                  "texte": "Le c fait le son [s] car il est devant e, i ou y.",
+                  "aValider": false
+                },
+                {
+                  "debut": 11,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Attention à l'accent sur le é. Le an de quarante (40). Le c fait le son [s] car il est devant e, i ou y. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "La tolérance unit les différences."
             },
             {
               "mot": "abriter",
@@ -390,40 +649,89 @@
               "astucesLoupe": [],
               "astuce": "",
               "famille": "",
-              "phrase": "Le toit abriter les oiseaux pendant la pluie."
+              "phrase": "Le toit sert à abriter les habitants."
             },
             {
               "mot": "célèbre",
               "syllabes": "cé/lè/bre",
               "pieges": [
                 1,
-                3
+                3,
+                6
               ],
-              "astucesLoupe": [],
-              "astuce": "",
-              "famille": "célèbrer",
-              "phrase": "Cette actrice est très célèbre dans le monde."
+              "astucesLoupe": [
+                {
+                  "debut": 1,
+                  "lettres": "é",
+                  "texte": "Attention à l'accent sur le é.",
+                  "aValider": false
+                },
+                {
+                  "debut": 3,
+                  "lettres": "è",
+                  "texte": "Attention à l'accent sur le è.",
+                  "aValider": false
+                },
+                {
+                  "debut": 6,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Attention à l'accent sur le é. Attention à l'accent sur le è. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "Ce peintre est très célèbre."
             },
             {
               "mot": "presque",
               "syllabes": "pres/que",
               "pieges": [
                 4,
-                5
+                5,
+                6
               ],
-              "astucesLoupe": [],
-              "astuce": "",
+              "astucesLoupe": [
+                {
+                  "debut": 4,
+                  "lettres": "q",
+                  "texte": "q se suit toujours de u, même muet, comme dans qui.",
+                  "aValider": false
+                },
+                {
+                  "debut": 5,
+                  "lettres": "u",
+                  "texte": "Après la lettre q, il y a un \"u\" muet.",
+                  "aValider": false
+                },
+                {
+                  "debut": 6,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "q se suit toujours de u, même muet, comme dans qui. Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
               "famille": "",
-              "phrase": "Il est presque midi, mangeons."
+              "phrase": "Il est presque midi maintenant."
             },
             {
               "mot": "ici",
               "syllabes": "i/ci",
-              "pieges": [],
-              "astucesLoupe": [],
-              "astuce": "",
+              "pieges": [
+                1
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 1,
+                  "lettres": "c",
+                  "texte": "Le c fait le son [s] car il est devant e, i ou y.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le c fait le son [s] car il est devant e, i ou y.",
               "famille": "",
-              "phrase": "Regarde le trésor qui est ici."
+              "phrase": "Regarde ce livre ici."
             },
             {
               "mot": "pour",
@@ -452,7 +760,6 @@
           "valide": true,
           "mots": [
             {
-              "mot": "une bibliothèque",
               "syllabes": "u/ne bi/blio/thè/que",
               "pieges": [
                 11,
@@ -460,6 +767,10 @@
                 14,
                 15
               ],
+              "astuce": "Le h est muet, il ne change pas le son. attention à l'accent Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "",
+              "mot": "une bibliothèque",
               "astucesLoupe": [
                 {
                   "debut": 11,
@@ -485,17 +796,17 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le h est muet, il ne change pas le son. attention à l'accent Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
-              "famille": "",
-              "phrase": ""
+              ]
             },
             {
-              "mot": "une mosquée",
               "syllabes": "u/ne mos/quée",
               "pieges": [
                 10
               ],
+              "astuce": "Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "",
+              "mot": "une mosquée",
               "astucesLoupe": [
                 {
                   "debut": 10,
@@ -503,17 +814,17 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le e final ne se prononce pas.",
-              "famille": "",
-              "phrase": ""
+              ]
             },
             {
-              "mot": "le manuscrit",
               "syllabes": "le ma/nus/crit",
               "pieges": [
                 11
               ],
+              "astuce": "Le t final est muet",
+              "famille": "",
+              "phrase": "Le manuscrit ancien raconte une légende.",
+              "mot": "le manuscrit",
               "astucesLoupe": [
                 {
                   "debut": 11,
@@ -521,18 +832,18 @@
                   "texte": "Le t final est muet",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le t final est muet",
-              "famille": "",
-              "phrase": "Le manuscrit ancien raconte une légende."
+              ]
             },
             {
-              "mot": "la justice",
               "syllabes": "la jus/ti/ce",
               "pieges": [
                 8,
                 9
               ],
+              "astuce": "Le c se prononce /s/ devant i et e. Le e final ne se prononce pas.",
+              "famille": "juste",
+              "phrase": "La justice protège les droits de chacun.",
+              "mot": "la justice",
               "astucesLoupe": [
                 {
                   "debut": 8,
@@ -546,19 +857,19 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le c se prononce /s/ devant i et e. Le e final ne se prononce pas.",
-              "famille": "juste",
-              "phrase": "La justice protège les droits de chacun."
+              ]
             },
             {
-              "mot": "la musique",
               "syllabes": "la mu/si/que",
               "pieges": [
                 5,
                 8,
                 9
               ],
+              "astuce": "Le s se prononce /z/ entre deux voyelles. Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "La musique rend les cours plus agréables.",
+              "mot": "la musique",
               "astucesLoupe": [
                 {
                   "debut": 5,
@@ -578,18 +889,18 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le s se prononce /z/ entre deux voyelles. Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
-              "famille": "",
-              "phrase": "La musique rend les cours plus agréables."
+              ]
             },
             {
-              "mot": "la médecine",
               "syllabes": "la mé/de/ci/ne",
               "pieges": [
                 7,
                 10
               ],
+              "astuce": "Le c devant i se prononce /s/. Le e final ne se prononce pas.",
+              "famille": "médecin",
+              "phrase": "La médecine aide à guérir les maladies.",
+              "mot": "la médecine",
               "astucesLoupe": [
                 {
                   "debut": 7,
@@ -603,17 +914,17 @@
                   "texte": "Le e final ne se prononce pas.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le c devant i se prononce /s/. Le e final ne se prononce pas.",
-              "famille": "médecin",
-              "phrase": "La médecine aide à guérir les maladies."
+              ]
             },
             {
-              "mot": "évoquer",
               "syllabes": "é/vo/quer",
               "pieges": [
                 4
               ],
+              "astuce": "Après la lettre q, il y a un \"u\" muet.",
+              "famille": "",
+              "phrase": "Il faut évoquer les souvenirs du voyage.",
+              "mot": "évoquer",
               "astucesLoupe": [
                 {
                   "debut": 4,
@@ -621,13 +932,9 @@
                   "texte": "Après la lettre q, il y a un \"u\" muet.",
                   "aValider": false
                 }
-              ],
-              "astuce": "Après la lettre q, il y a un \"u\" muet.",
-              "famille": "",
-              "phrase": "Il faut évoquer les souvenirs du voyage."
+              ]
             },
             {
-              "mot": "précieux",
               "syllabes": "pré/ci/eux",
               "pieges": [
                 3,
@@ -635,6 +942,10 @@
                 6,
                 7
               ],
+              "astuce": "Le c devant i se prononce /s/. eu se prononce /ø/ comme dans « peur ». Le x final ne se prononce pas",
+              "famille": "",
+              "phrase": "Ce bijou est très précieux pour elle.",
+              "mot": "précieux",
               "groupesLoupe": [
                 [
                   3
@@ -666,13 +977,9 @@
                   "texte": "Le x final ne se prononce pas",
                   "aValider": false
                 }
-              ],
-              "astuce": "Le c devant i se prononce /s/. eu se prononce /ø/ comme dans « peur ». Le x final ne se prononce pas",
-              "famille": "",
-              "phrase": "Ce bijou est très précieux pour elle."
+              ]
             },
             {
-              "mot": "précieuse",
               "syllabes": "pré/ci/euse",
               "pieges": [
                 3,
@@ -681,6 +988,10 @@
                 7,
                 8
               ],
+              "astuce": "attention aux lettres muettes",
+              "famille": "précieux",
+              "phrase": "Cette montre est vraiment précieuse.",
+              "mot": "précieuse",
               "groupesLoupe": [
                 [
                   3
@@ -696,19 +1007,19 @@
                   8
                 ]
               ],
-              "astucesLoupe": [],
-              "astuce": "attention aux lettres muettes",
-              "famille": "précieux",
-              "phrase": "Cette montre est vraiment précieuse."
+              "astucesLoupe": []
             },
             {
-              "mot": "dans",
               "syllabes": "dans",
               "pieges": [
                 1,
                 2,
                 3
               ],
+              "astuce": "An de 40 Le s final est muet",
+              "famille": "",
+              "phrase": "Le chat est caché dans la boîte.",
+              "mot": "dans",
               "groupesLoupe": [
                 [
                   1,
@@ -731,10 +1042,7 @@
                   "texte": "Le s final est muet",
                   "aValider": false
                 }
-              ],
-              "astuce": "An de 40 Le s final est muet",
-              "famille": "",
-              "phrase": "Le chat est caché dans la boîte."
+              ]
             }
           ],
           "phrases": [
@@ -775,5 +1083,5 @@
       "listes": []
     }
   ],
-  "publieLe": "2026-11-17T19:13:49.248Z"
+  "publieLe": "2026-11-17T19:45:05.987Z"
 }
