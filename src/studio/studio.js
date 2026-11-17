@@ -184,7 +184,12 @@ export async function monterStudio(racine) {
       class: 'st-btn st-btn-fort',
       disabled: !statut?.albert || enGeneration || !l.mots.length,
       onclick: () => generer(l),
-    }, enGeneration ? 'Albert prépare la liste…' : 'Compléter avec Albert');
+    }, enGeneration ? 'Albert prépare la liste…' : 'Tout compléter avec Albert');
+    const boutonActivite = (mode, libelle) => el('button', {
+      class: 'st-btn st-btn-clair',
+      disabled: !statut?.albert || enGeneration || !l.mots.length,
+      onclick: () => generer(l, mode),
+    }, libelle);
 
     remplir(editeur,
       el('div', { class: 'st-bloc' },
@@ -195,10 +200,14 @@ export async function monterStudio(racine) {
           el('div', { class: 'st-pile' },
             el('button', { class: 'st-btn', onclick: () => majMots(l, zoneMots.value) }, 'Mettre à jour les mots'),
             btnAlbert,
+            el('p', { class: 'st-aide' }, 'Pour une longue liste, générez une activité à la fois : chaque réponse d’Albert sera plus courte.'),
+            boutonActivite('loupe', 'Loupe · syllabes et indices'),
+            boutonActivite('pieges', 'Pièges · lettres difficiles'),
+            boutonActivite('boss', 'Boss · phrases'),
             el('button', { class: 'st-btn st-btn-clair', disabled: !l.mots.length, onclick: () => remplirAuto(l) }, 'Remplir sans Albert'),
             !statut ? el('p', { class: 'st-aide' }, 'Entrez le code studio (en haut à droite) pour utiliser Albert.') : null,
             statut && !statut.albert ? el('p', { class: 'st-aide' }, 'La clé ALBERT_API_KEY n\'est pas configurée sur Vercel.') : null,
-            el('p', { class: 'st-aide' }, '« Remplir sans Albert » propose syllabes, lettres pièges et astuce à partir de règles simples ; seules les cases vides sont complétées.'))),
+            el('p', { class: 'st-aide' }, 'Photo-Flash et Dictée radio utilisent directement les mots saisis. « Remplir sans Albert » propose des indices à partir de règles simples.'))),
         l._alertes?.length ? el('div', { class: 'st-alertes' },
           el('strong', {}, 'Points à vérifier :'),
           el('ul', {}, l._alertes.map((x) => el('li', {}, x))),
@@ -320,35 +329,45 @@ export async function monterStudio(racine) {
   }
 
   // --- Albert -----------------------------------------------------------------
-  async function appelAlbert(l) {
+  async function appelAlbert(l, mode = 'complet') {
     const r = await fetch('/api/albert', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-studio-code': code },
-      body: JSON.stringify({ titre: l.titre, mots: l.mots.map((x) => x.mot), reglages: mondeCourant().reglages }),
+      body: JSON.stringify({ titre: l.titre, mots: l.mots.map((x) => x.mot), reglages: mondeCourant().reglages, mode }),
     });
     const j = await r.json().catch(() => ({ erreur: `Réponse illisible (${r.status}).` }));
     if (!r.ok) throw new Error(j.erreur || `Erreur ${r.status}`);
     return j;
   }
 
-  function appliquer(l, resultat) {
-    const parMot = new Map(resultat.mots.map((x) => [x.mot, x]));
-    l.mots = l.mots.map((x) => ({ ...x, ...(parMot.get(x.mot) || {}) }));
-    if (resultat.phrases?.length) l.phrases = resultat.phrases;
+  function appliquer(l, resultat, mode = 'complet') {
+    if (mode !== 'boss') {
+      const parMot = new Map(resultat.mots.map((x) => [x.mot, x]));
+      l.mots = l.mots.map((x) => {
+        const proposition = parMot.get(x.mot) || {};
+        return mode === 'pieges' ? { ...x, pieges: proposition.pieges || x.pieges } : { ...x, ...proposition };
+      });
+    }
+    if ((mode === 'complet' || mode === 'boss') && resultat.phrases?.length) l.phrases = resultat.phrases;
     l._alertes = resultat.alertes;
     l.valide = false;
   }
 
-  async function generer(l) {
-    const dejaRempli = l.mots.some((x) => x.phrase || x.famille);
-    if (dejaRempli && !confirm('Remplacer syllabes, pièges, astuces, familles et phrases par la proposition d\'Albert ?')) return;
+  async function generer(l, mode = 'complet') {
+    const dejaRempli = mode === 'boss' ? l.phrases.length
+      : mode === 'pieges' ? l.mots.some((x) => x.pieges?.length)
+        : l.mots.some((x) => x.phrase || x.famille);
+    const remplacement = mode === 'boss' ? 'les phrases du Boss'
+      : mode === 'pieges' ? 'les lettres pièges'
+        : mode === 'loupe' ? 'les syllabes et les indices' : 'les éléments de la liste et les phrases du Boss';
+    if (dejaRempli && !confirm(`Remplacer ${remplacement} par la proposition d’Albert ?`)) return;
     enGeneration = true;
     majEditeur(); majColonne();
     try {
-      const res = await appelAlbert(l);
-      appliquer(l, res);
+      const res = await appelAlbert(l, mode);
+      appliquer(l, res, mode);
       sauver();
-      notifier(`Liste complétée (${res.model}). Relisez-la avant de valider.`);
+      notifier(`Génération terminée (${res.model}). Relisez la proposition avant de valider.`);
     } catch (e) {
       notifier(e.message, 'erreur');
     } finally {

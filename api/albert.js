@@ -1,5 +1,5 @@
 // Relais vers l'API Albert : la clé reste côté serveur, jamais dans le navigateur.
-import { construireMessages, lireJson, nettoyer } from './_lib/generation.js';
+import { construireMessages, lireJson, nettoyer, MODES_ALBERT } from './_lib/generation.js';
 import { codeValide, refuser, corps } from './_lib/acces.js';
 import { propre } from '../src/lib/texte.js';
 import { analyser, difficultes } from '../src/lib/ortho.js';
@@ -20,10 +20,11 @@ async function choisirModele(cle) {
   return modeleEnCache;
 }
 
-async function appelerAlbert(messages) {
+async function appelerAlbert(messages, mode) {
   const cle = process.env.ALBERT_API_KEY;
   if (!cle) throw Object.assign(new Error('La clé ALBERT_API_KEY n\'est pas configurée sur Vercel.'), { statut: 500 });
   const model = await choisirModele(cle);
+  const budgets = { complet: 7000, loupe: 7000, pieges: 3500, boss: 3500 };
   const envoyer = (avecFormat) => fetch(`${BASE}/chat/completions`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/json' },
@@ -31,7 +32,8 @@ async function appelerAlbert(messages) {
       model,
       messages,
       temperature: 0.3,
-      max_tokens: 3500,
+      max_completion_tokens: budgets[mode],
+      ...(/gpt-oss/i.test(model) ? { reasoning_effort: 'low' } : {}),
       ...(avecFormat ? { response_format: { type: 'json_object' } } : {}),
     }),
   });
@@ -43,7 +45,12 @@ async function appelerAlbert(messages) {
     throw Object.assign(new Error(`Albert a répondu ${r.status}. ${detail}`), { statut: 502 });
   }
   const json = await r.json();
-  return { contenu: json.choices?.[0]?.message?.content || '', model };
+  const choix = json.choices?.[0];
+  if (choix?.finish_reason === 'length') {
+    const conseil = mode === 'complet' ? 'Essayez de générer une activité à la fois.' : 'Essayez avec moins de mots dans la liste.';
+    throw Object.assign(new Error(`Albert a atteint sa limite de sortie. ${conseil}`), { statut: 502 });
+  }
+  return { contenu: choix?.message?.content || '', model };
 }
 
 /** Réponse simulée pour tester sans clé (ALBERT_MOCK=1) : règles automatiques + phrases génériques. */
@@ -68,7 +75,8 @@ export default async function handler(req, res) {
   if (!codeValide(req)) return refuser(res, 401, 'Code studio incorrect.');
   let donnees;
   try { donnees = await corps(req); } catch { return refuser(res, 400, 'Requête illisible.'); }
-  const { titre = '', reglages = {} } = donnees;
+  const { titre = '', reglages = {}, mode = 'complet' } = donnees;
+  if (!MODES_ALBERT.includes(mode)) return refuser(res, 400, 'Activité inconnue.');
   const mots = [...new Set((Array.isArray(donnees.mots) ? donnees.mots : []).map(propre).filter(Boolean))];
   if (!mots.length) return refuser(res, 400, 'La liste ne contient aucun mot.');
   if (mots.length > 30) return refuser(res, 400, 'La liste est trop longue (30 mots maximum).');
@@ -77,8 +85,14 @@ export default async function handler(req, res) {
   try {
     let contenu; let model = 'simulation';
     if (process.env.ALBERT_MOCK === '1') contenu = simulation(mots, reglages);
-    else ({ contenu, model } = await appelerAlbert(construireMessages({ titre, mots, reglages })));
-    const resultat = nettoyer(lireJson(contenu), { mots, reglages });
+    else ({ contenu, model } = await appelerAlbert(construireMessages({ titre, mots, reglages, mode }), mode));
+    let brut;
+    try { brut = lireJson(contenu); }
+    catch { return refuser(res, 502, 'Albert a renvoyé une réponse illisible. Réessayez ou choisissez une autre activité.'); }
+    if (!brut || typeof brut !== 'object' || (mode === 'boss' ? !Array.isArray(brut.phrases) : !Array.isArray(brut.mots))) {
+      return refuser(res, 502, 'Albert a renvoyé un format incomplet. Réessayez cette activité.');
+    }
+    const resultat = nettoyer(brut, { mots, reglages, mode });
     res.status(200).json({ ...resultat, model });
   } catch (e) {
     refuser(res, e.statut || 500, e.message || 'Erreur inconnue.');
