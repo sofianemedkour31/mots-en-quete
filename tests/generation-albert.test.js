@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { construireMessages, nettoyer, preparerPointsLoupe } from '../api/_lib/generation.js';
-import { regleLoupe } from '../src/lib/ortho.js';
+import { piegesAuto, regleLoupe } from '../src/lib/ortho.js';
 import { preparerListe } from '../src/donnees.js';
 import handler from '../api/albert.js';
 
@@ -51,7 +51,7 @@ test('le nettoyage conserve seulement les données de l’activité demandée', 
   assert.equal(loupe.mots[0].syllabes, 'ba/teau');
   assert.equal(Object.hasOwn(loupe.mots[0], 'pieges'), false);
   assert.equal(loupe.mots[0].astuce, 'Pense au groupe eau.');
-  assert.equal(loupe.mots[1].astuce, "Retiens l'accent circonflexe. Pense au groupe eau.");
+  assert.equal(loupe.mots[1].astuce, "Attention à l'accent sur le â. Pense au groupe eau.");
 
   const sansPoint = nettoyer({ mots: [{ mot: 'bateau', astuce: 'Astuce inventée.', famille: 'bateaux' }] }, { mots: ['bateau'], mode: 'loupe' });
   assert.equal(sansPoint.mots[0].astuce, '');
@@ -85,6 +85,37 @@ test('la double consonne exige les deux lettres jaunes', () => {
   assert.equal(regleLoupe('pomme', deux[0].points[0]).texte, 'Attention à la double consonne.');
   const une = preparerPointsLoupe(['pomme'], [{ mot: 'pomme', indices: [2] }]);
   assert.equal(regleLoupe('pomme', une[0].points[0]), null);
+});
+
+test('les nouveaux référents reconnaissent les lettres dans leur mot', () => {
+  const point = (mot, indices) => preparerPointsLoupe([mot], [{ mot, indices }])[0].points;
+  assert.deepEqual(point('quarante', [4, 5]), [{ debut: 4, lettres: 'an' }]);
+  assert.equal(regleLoupe('quarante', point('quarante', [4, 5])[0]).texte, 'Le an de quarante (40).');
+  assert.deepEqual(point('trente', [2, 3]), [{ debut: 2, lettres: 'en' }]);
+  assert.equal(regleLoupe('trente', point('trente', [2, 3])[0]).texte, 'Le en de trente (30).');
+  assert.deepEqual(point('animal', [0, 1]), [{ debut: 0, lettres: 'a' }, { debut: 1, lettres: 'n' }]);
+
+  assert.equal(regleLoupe('école', point('école', [0])[0]).texte, "Attention à l'accent sur le é.");
+  assert.equal(regleLoupe('École', point('École', [0])[0]).texte,
+    "Attention à la majuscule. Attention à l'accent sur le é.");
+  assert.ok(piegesAuto('école').includes(0));
+  assert.ok(piegesAuto('Paris').includes(0));
+  for (const [mot, index, lettre] of [['petit', 4, 't'], ['gros', 3, 's'], ['grand', 4, 'd'], ['prix', 3, 'x']]) {
+    assert.equal(regleLoupe(mot, point(mot, [index])[0]).texte, `Attention au ${lettre} muet à la fin.`);
+  }
+});
+
+test('les règles contextuelles évitent les fins et graphies ambiguës', () => {
+  const astuce = (mot, index) => regleLoupe(mot, { debut: index, lettres: [...mot][index] })?.texte;
+  assert.equal(astuce('rose', 2), 'Le s fait le son [z] car il est entre deux voyelles.');
+  assert.equal(astuce('soleil', 0), 'Le s fait le son [s] car il n’est pas entre deux voyelles.');
+  assert.equal(astuce('cerise', 0), 'Le c fait le son [s] car il est devant e, i ou y.');
+  assert.equal(astuce('carte', 0), 'Le c fait le son [k] car il n’est pas devant e, i ou y.');
+  assert.equal(astuce('gilet', 0), 'Le g fait le son [j] car il est devant e, i ou y.');
+  assert.equal(astuce('gare', 0), 'Le g fait le son [g] car il n’est pas devant e, i ou y.');
+  assert.equal(astuce('chat', 0), undefined);
+  assert.equal(astuce('blanc', 4), undefined);
+  assert.equal(astuce('sang', 3), undefined);
 });
 
 test('une proposition à valider ne part pas dans la Loupe élève', () => {

@@ -79,7 +79,7 @@ export function syllabesSures(mot, syllabes) {
 // ---------------------------------------------------------------------------
 const MESSAGES = {
   double: (l) => `Attention : deux « ${l} ».`,
-  muette: (l) => `Le « ${l} » de la fin ne s'entend pas : cherche un mot de la même famille.`,
+  muette: (l) => 'tsdx'.includes(l) ? `Attention au ${l} muet à la fin.` : `Le « ${l} » de la fin ne s'entend pas : cherche un mot de la même famille.`,
   eau: () => 'Le son [o] s\'écrit « eau ».',
   au: () => 'Le son [o] s\'écrit « au ».',
   ai: (l) => `Le son [è] s'écrit « ${l} ».`,
@@ -88,13 +88,14 @@ const MESSAGES = {
   h: () => 'Le « h » ne s\'entend pas.',
   mbp: () => 'On écrit « m » devant b et p.',
   cedille: () => 'La cédille fait le son [s].',
-  accent: (l) => `N'oublie pas l'accent : « ${l} ».`,
-  eMuet: () => 'Le « e » de la fin ne s\'entend pas.',
-  sz: () => 'Un seul « s » entre deux voyelles fait le son [z].',
-  cDoux: () => '« c » devant e, i ou y fait le son [s].',
-  gDoux: () => '« g » devant e, i ou y fait le son [j].',
+  accent: (l) => `Attention à l'accent sur le ${l}.`,
+  majuscule: () => 'Attention à la majuscule.',
+  eMuet: () => 'Le e final ne se prononce pas.',
+  sz: () => 'Le s fait le son [z] car il est entre deux voyelles.',
+  cDoux: () => 'Le c fait le son [s] car il est devant e, i ou y.',
+  gDoux: () => 'Le g fait le son [j] car il est devant e, i ou y.',
 };
-const PRIORITAIRES = new Set(['double', 'muette', 'eau', 'au', 'ai', 'ph', 'h', 'accent', 'mbp', 'cedille']);
+const PRIORITAIRES = new Set(['double', 'muette', 'eau', 'au', 'ai', 'ph', 'h', 'accent', 'majuscule', 'mbp', 'cedille']);
 
 /** Repère les difficultés probables d'un mot. Renvoie [{ type, indices, lettres }]. */
 export function difficultes(mot) {
@@ -128,7 +129,9 @@ export function difficultes(mot) {
     const c = m[i];
     if (c === 'h' && (i === 0 || !'cpstrg'.includes(m[i - 1]))) ajouter('h', [i]);
     if (c === 'ç') ajouter('cedille', [i]);
-    if ('âêîôûëïèü'.includes(c)) ajouter('accent', [i]);
+    if ('àâäéèêëîïôöùûüÿ'.includes(c)) ajouter('accent', [i]);
+    if ((i === 0 || /[\s'’-]/.test(mot[i - 1]))
+      && mot[i] !== mot[i].toLocaleLowerCase('fr-FR') && mot[i] === mot[i].toLocaleUpperCase('fr-FR')) ajouter('majuscule', [i]);
     if (c === 'm' && 'bp'.includes(m[i + 1] || '') && estVoyelle(m[i - 1] || '')) ajouter('mbp', [i]);
   }
   // Lettre muette finale (chat, gros, long, sirop) et e muet après voyelle (amie, joie).
@@ -153,6 +156,7 @@ export function piegesAuto(mot) {
 /** Découpe les lettres sélectionnées en unités orthographiques, avec correction possible. */
 export function pointsLoupe(mot, selection, groupesManuels) {
   const lettres = [...mot];
+  const minuscules = [...mot.toLocaleLowerCase('fr-FR')];
   const indices = [...new Set((Array.isArray(selection) ? selection : [])
     .filter((i) => Number.isInteger(i) && i >= 0 && i < lettres.length))].sort((a, b) => a - b);
   const creerPoint = (groupe) => ({ debut: groupe[0], lettres: groupe.map((i) => lettres[i]).join('') });
@@ -165,6 +169,14 @@ export function pointsLoupe(mot, selection, groupesManuels) {
   const graphies = difficultes(mot)
     .filter((d) => d.indices.length > 1 && d.indices.every((i) => indices.includes(i)))
     .sort((a, b) => b.indices.length - a.indices.length);
+  for (let i = 0; i < minuscules.length - 1; i++) {
+    const groupe = minuscules.slice(i, i + 2).join('');
+    const suivante = minuscules[i + 2] || '';
+    if (['an', 'en'].includes(groupe) && (!suivante || (!estVoyelle(suivante) && !'nm'.includes(suivante)))
+      && indices.includes(i) && indices.includes(i + 1)) {
+      graphies.push({ indices: [i, i + 1] });
+    }
+  }
   const points = [];
   for (let k = 0; k < indices.length;) {
     const i = indices[k];
@@ -181,16 +193,45 @@ export function regleLoupe(mot, point) {
   const lettres = [...mot.toLocaleLowerCase('fr-FR')];
   const debut = point.debut;
   const cible = point.lettres.toLocaleLowerCase('fr-FR');
+  const messages = [];
+  const types = [];
+  const ajouter = (type, texte) => { types.push(type); messages.push(texte); };
+  if ([...point.lettres].some((c) => c !== c.toLocaleLowerCase('fr-FR') && c === c.toLocaleUpperCase('fr-FR'))) {
+    ajouter('majuscule', 'Attention à la majuscule.');
+  }
+  for (const accentuee of [...cible].filter((c) => /[àâäéèêëîïôöùûüÿ]/.test(c))) {
+    ajouter('accent', `Attention à l'accent sur le ${accentuee}.`);
+  }
   if (cible === 'u' && lettres[debut - 1] === 'q' && /[eéèêëiîïy]/.test(lettres[debut + 1] || '')) {
-    return { type: 'u_apres_q', texte: 'Après la lettre q, il y a un "u" muet.' };
+    ajouter('u_apres_q', 'Après la lettre q, il y a un "u" muet.');
   }
   if (cible === 'e' && debut === lettres.length - 1 && lettres.length >= 3) {
-    return { type: 'e_final', texte: 'Le e final ne se prononce pas.' };
+    ajouter('e_final', 'Le e final ne se prononce pas.');
   }
   if (cible.length === 2 && cible[0] === cible[1] && /[bcdfghjklmnpqrstvwxz]/.test(cible[0])) {
-    return { type: 'consonne_double', texte: 'Attention à la double consonne.' };
+    ajouter('consonne_double', 'Attention à la double consonne.');
   }
-  return null;
+  if ((cible === 'an' || cible === 'en') && (!lettres[debut + 2]
+    || (!estVoyelle(lettres[debut + 2]) && !'nm'.includes(lettres[debut + 2])))) {
+    ajouter(cible, cible === 'an' ? 'Le an de quarante (40).' : 'Le en de trente (30).');
+  }
+  if (cible.length === 1 && debut === lettres.length - 1 && /[tsdx]/.test(cible)) {
+    ajouter('finale_muette', `Attention au ${cible} muet à la fin.`);
+  } else if (cible === 's' && lettres[debut - 1] !== 's' && lettres[debut + 1] !== 's'
+    && lettres[debut - 1] !== 'h' && lettres[debut + 1] !== 'h') {
+    ajouter('s_contextuel', estVoyelle(lettres[debut - 1]) && estVoyelle(lettres[debut + 1])
+      ? 'Le s fait le son [z] car il est entre deux voyelles.'
+      : 'Le s fait le son [s] car il n’est pas entre deux voyelles.');
+  } else if (cible === 'c' && lettres[debut + 1] && !['h', 'c'].includes(lettres[debut + 1])) {
+    ajouter('c_contextuel', /[eéèêëiîïy]/.test(lettres[debut + 1])
+      ? 'Le c fait le son [s] car il est devant e, i ou y.'
+      : 'Le c fait le son [k] car il n’est pas devant e, i ou y.');
+  } else if (cible === 'g' && lettres[debut + 1] && !['n', 'h'].includes(lettres[debut + 1])) {
+    ajouter('g_contextuel', /[eéèêëiîïy]/.test(lettres[debut + 1])
+      ? 'Le g fait le son [j] car il est devant e, i ou y.'
+      : 'Le g fait le son [g] car il n’est pas devant e, i ou y.');
+  }
+  return messages.length ? { type: types.join('+'), texte: messages.join(' ') } : null;
 }
 
 export function astuceAuto(mot) {
