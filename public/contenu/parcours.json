@@ -19,7 +19,6 @@
           "valide": true,
           "mots": [
             {
-              "mot": "de la semoule",
               "syllabes": "de la se/mou/le",
               "pieges": [
                 9,
@@ -28,37 +27,40 @@
               ],
               "astuce": "Dans « semoule », le « ou » fait le son [u] et le « e » final reste muet.",
               "famille": "semoule, semouler",
-              "phrase": "J'ai mangé du riz avec de la semoule ce soir."
+              "phrase": "J'ai mangé du riz avec de la semoule ce soir.",
+              "mot": "de la semoule"
             },
             {
-              "mot": "une mouche",
               "syllabes": "u/ne mou/che",
               "pieges": [
+                5,
+                6,
                 7,
                 8,
                 9
               ],
               "astuce": "Le « ch » se prononce [ʃ] comme dans « chat » et le « e » final est muet.",
               "famille": "mouche, moucher, mouchard",
-              "phrase": "Une mouche vole près de la fenêtre de la classe."
+              "phrase": "Une mouche vole près de la fenêtre de la classe.",
+              "mot": "une mouche"
             },
             {
-              "mot": "du salami",
               "syllabes": "du sa/la/mi",
               "pieges": [],
               "astuce": "Pas de piège, il s'écrit comme il se prononce.",
               "famille": "",
-              "phrase": "Le goûter comprend du pain et du salami."
+              "phrase": "Le goûter comprend du pain et du salami.",
+              "mot": "du salami"
             },
             {
-              "mot": "ma salade",
               "syllabes": "ma sa/la/de",
               "pieges": [
                 8
               ],
               "astuce": "Le « e » final de « salade » ne se prononce pas, il reste muet.",
               "famille": "salade, saladier, salader",
-              "phrase": "Je mange ma salade avec des tomates fraîches."
+              "phrase": "Je mange ma salade avec des tomates fraîches.",
+              "mot": "ma salade"
             }
           ],
           "phrases": [
@@ -76,15 +78,677 @@
     },
     {
       "id": 2,
-      "nom": "Monde 2",
+      "nom": "Monde de Firdaws",
       "couleur": "jaune",
       "reglages": {
         "niveau": "CE2",
         "deblocage": "progressif",
         "saisie": "clavier",
-        "nbPhrasesBoss": 5
+        "nbPhrasesBoss": 7
       },
-      "listes": []
+      "listes": [
+        {
+          "id": "l-mwjlgs0yv3h",
+          "titre": "Tombouctou - 1",
+          "valide": true,
+          "mots": [
+            {
+              "mot": "l'Afrique",
+              "syllabes": "l'A/fri/que",
+              "pieges": [
+                6,
+                7,
+                8
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "L'Afrique possède de vastes savanes."
+            },
+            {
+              "mot": "le Mali",
+              "syllabes": "le Ma/li",
+              "pieges": [],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Le Mali est un pays d'Afrique de l'Ouest."
+            },
+            {
+              "mot": "une cité",
+              "syllabes": "u/ne ci/té",
+              "pieges": [
+                7
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "citadin",
+              "phrase": "Une cité historique attire de nombreux touristes."
+            },
+            {
+              "mot": "la terre",
+              "syllabes": "la terre",
+              "pieges": [
+                5,
+                6
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "La terre tourne autour du soleil."
+            },
+            {
+              "mot": "un maçon",
+              "syllabes": "un ma/çon",
+              "pieges": [
+                5
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "ç",
+                  "texte": "Le ç se prononce [s]",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le ç se prononce [s]",
+              "famille": "maçonnerie",
+              "phrase": "Un maçon construit des murs solides."
+            },
+            {
+              "mot": "une année",
+              "syllabes": "u/ne an/né/e",
+              "pieges": [
+                5,
+                6,
+                7
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Une année compte douze mois."
+            },
+            {
+              "mot": "une équipe",
+              "syllabes": "u/ne é/qui/pe",
+              "pieges": [
+                4,
+                5,
+                6
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "équiper",
+              "phrase": "Une équipe gagne quand elle travaille ensemble."
+            },
+            {
+              "mot": "la façade",
+              "syllabes": "la fa/çade",
+              "pieges": [
+                5,
+                8
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "ç",
+                  "texte": "Le ç donne le son [s]",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le ç donne le son [s] Le e final ne se prononce pas.",
+              "famille": "façadier",
+              "phrase": "La façade du bâtiment est très décorée."
+            },
+            {
+              "mot": "un bâtiment",
+              "syllabes": "un bâ/ti/ment",
+              "pieges": [
+                4
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "bâtir",
+              "phrase": "Un bâtiment moderne se dresse au centre-ville."
+            },
+            {
+              "mot": "le désert",
+              "syllabes": "le dé/sert",
+              "pieges": [
+                4
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "désertique",
+              "phrase": "Le désert est très chaud en été."
+            },
+            {
+              "mot": "menacer",
+              "syllabes": "me/na/cer",
+              "pieges": [
+                4,
+                5
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "menace",
+              "phrase": "Il ne faut pas menacer les autres."
+            },
+            {
+              "mot": "incroyable",
+              "syllabes": "in/croy/a/ble",
+              "pieges": [
+                5,
+                9
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "y",
+                  "texte": "Le y ici représente le son [i].",
+                  "aValider": false
+                },
+                {
+                  "debut": 9,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le y ici représente le son [i]. Le e final ne se prononce pas.",
+              "famille": "croyance",
+              "phrase": "Ce tour de magie est incroyable."
+            },
+            {
+              "mot": "voici",
+              "syllabes": "vo/i/ci",
+              "pieges": [
+                3
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 3,
+                  "lettres": "c",
+                  "texte": "Le c devant i se prononce [s].",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le c devant i se prononce [s].",
+              "famille": "voix",
+              "phrase": "Voici le livre que tu attendais."
+            },
+            {
+              "mot": "chaque",
+              "syllabes": "cha/que",
+              "pieges": [
+                3,
+                4
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Chaque élève doit rendre son devoir."
+            }
+          ],
+          "phrases": [
+            "L'Afrique est vaste, mais le Mali reste très riche en histoire.",
+            "Une cité comme Tombouctou se trouve au bord de la terre.",
+            "Un maçon construit chaque jour un bâtiment solide pour l'avenir.",
+            "Une année passe, et chaque saison révèle une équipe de chercheurs.",
+            "Le désert de sable doit menacer la façade du vieux palais.",
+            "Voici un exemple incroyable d'architecture qui inspire les enfants.",
+            "Chaque nuit, le vent souffle sur l'Afrique et le Mali."
+          ],
+          "etapes": {}
+        },
+        {
+          "id": "l-mwky876tk6w",
+          "titre": "Tombouctou - 2",
+          "valide": true,
+          "mots": [
+            {
+              "mot": "un siècle",
+              "syllabes": "un siè/cle",
+              "pieges": [
+                5,
+                6,
+                7,
+                8
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Ce tableau date d'un siècle ancien."
+            },
+            {
+              "mot": "un habitant",
+              "syllabes": "un ha/bi/tant",
+              "pieges": [
+                3,
+                10
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "habiter",
+              "phrase": "Un habitant de la ville aime le parc."
+            },
+            {
+              "mot": "le passage",
+              "syllabes": "le pas/sa/ge",
+              "pieges": [
+                5,
+                6
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "passer",
+              "phrase": "Le passage secret mène au grenier."
+            },
+            {
+              "mot": "un commerçant",
+              "syllabes": "un com/mer/çant",
+              "pieges": [
+                5,
+                6,
+                9
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "commerce",
+              "phrase": "Un commerçant vend des fruits au marché."
+            },
+            {
+              "mot": "un lieu",
+              "syllabes": "un lieu",
+              "pieges": [],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Ce parc est un lieu de détente."
+            },
+            {
+              "mot": "la tolérance",
+              "syllabes": "la to/lé/ran/ce",
+              "pieges": [
+                6
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "tolérer",
+              "phrase": "La tolérance aide à vivre ensemble."
+            },
+            {
+              "mot": "abriter",
+              "syllabes": "a/bri/ter",
+              "pieges": [],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Le toit abriter les oiseaux pendant la pluie."
+            },
+            {
+              "mot": "célèbre",
+              "syllabes": "cé/lè/bre",
+              "pieges": [
+                1,
+                3
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "célèbrer",
+              "phrase": "Cette actrice est très célèbre dans le monde."
+            },
+            {
+              "mot": "presque",
+              "syllabes": "pres/que",
+              "pieges": [
+                4,
+                5
+              ],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Il est presque midi, mangeons."
+            },
+            {
+              "mot": "ici",
+              "syllabes": "i/ci",
+              "pieges": [],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Regarde le trésor qui est ici."
+            },
+            {
+              "mot": "pour",
+              "syllabes": "pour",
+              "pieges": [],
+              "astucesLoupe": [],
+              "astuce": "",
+              "famille": "",
+              "phrase": "Ce cadeau est pour toi."
+            }
+          ],
+          "phrases": [
+            "Le vieux livre raconte un siècle d'aventures dans un lieu mystérieux.",
+            "Un habitant de la ville célèbre aime abriter les animaux perdus ici.",
+            "Le passage secret mène presque toujours vers un commerçant ami.",
+            "La tolérance guide les enfants qui cherchent un abri pour rêver.",
+            "Ici, le marché célèbre attire un habitant curieux et un commerçant.",
+            "Presque tous les voyageurs visitent le passage pour découvrir un lieu sacré.",
+            "Un siècle de légendes a abriter la tolérance et la paix ici."
+          ],
+          "etapes": {}
+        },
+        {
+          "id": "l-mwky8gaak7y",
+          "titre": "Tombouctou - 3",
+          "valide": true,
+          "mots": [
+            {
+              "mot": "une bibliothèque",
+              "syllabes": "u/ne bi/blio/thè/que",
+              "pieges": [
+                11,
+                12,
+                14,
+                15
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 11,
+                  "lettres": "h",
+                  "texte": "Le h est muet, il ne change pas le son.",
+                  "aValider": false
+                },
+                {
+                  "debut": 12,
+                  "lettres": "è",
+                  "texte": "attention à l'accent",
+                  "aValider": false
+                },
+                {
+                  "debut": 14,
+                  "lettres": "u",
+                  "texte": "Après la lettre q, il y a un \"u\" muet.",
+                  "aValider": false
+                },
+                {
+                  "debut": 15,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le h est muet, il ne change pas le son. attention à l'accent Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": ""
+            },
+            {
+              "mot": "une mosquée",
+              "syllabes": "u/ne mos/quée",
+              "pieges": [
+                10
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 10,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": ""
+            },
+            {
+              "mot": "le manuscrit",
+              "syllabes": "le ma/nus/crit",
+              "pieges": [
+                11
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 11,
+                  "lettres": "t",
+                  "texte": "Le t final est muet",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le t final est muet",
+              "famille": "",
+              "phrase": "Le manuscrit ancien raconte une légende."
+            },
+            {
+              "mot": "la justice",
+              "syllabes": "la jus/ti/ce",
+              "pieges": [
+                8,
+                9
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 8,
+                  "lettres": "c",
+                  "texte": "Le c se prononce /s/ devant i et e.",
+                  "aValider": false
+                },
+                {
+                  "debut": 9,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le c se prononce /s/ devant i et e. Le e final ne se prononce pas.",
+              "famille": "juste",
+              "phrase": "La justice protège les droits de chacun."
+            },
+            {
+              "mot": "la musique",
+              "syllabes": "la mu/si/que",
+              "pieges": [
+                5,
+                8,
+                9
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 5,
+                  "lettres": "s",
+                  "texte": "Le s se prononce /z/ entre deux voyelles.",
+                  "aValider": false
+                },
+                {
+                  "debut": 8,
+                  "lettres": "u",
+                  "texte": "Après la lettre q, il y a un \"u\" muet.",
+                  "aValider": false
+                },
+                {
+                  "debut": 9,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le s se prononce /z/ entre deux voyelles. Après la lettre q, il y a un \"u\" muet. Le e final ne se prononce pas.",
+              "famille": "",
+              "phrase": "La musique rend les cours plus agréables."
+            },
+            {
+              "mot": "la médecine",
+              "syllabes": "la mé/de/ci/ne",
+              "pieges": [
+                7,
+                10
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 7,
+                  "lettres": "c",
+                  "texte": "Le c devant i se prononce /s/.",
+                  "aValider": false
+                },
+                {
+                  "debut": 10,
+                  "lettres": "e",
+                  "texte": "Le e final ne se prononce pas.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le c devant i se prononce /s/. Le e final ne se prononce pas.",
+              "famille": "médecin",
+              "phrase": "La médecine aide à guérir les maladies."
+            },
+            {
+              "mot": "évoquer",
+              "syllabes": "é/vo/quer",
+              "pieges": [
+                4
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 4,
+                  "lettres": "u",
+                  "texte": "Après la lettre q, il y a un \"u\" muet.",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Après la lettre q, il y a un \"u\" muet.",
+              "famille": "",
+              "phrase": "Il faut évoquer les souvenirs du voyage."
+            },
+            {
+              "mot": "précieux",
+              "syllabes": "pré/ci/eux",
+              "pieges": [
+                3,
+                5,
+                6,
+                7
+              ],
+              "groupesLoupe": [
+                [
+                  3
+                ],
+                [
+                  5,
+                  6
+                ],
+                [
+                  7
+                ]
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 3,
+                  "lettres": "c",
+                  "texte": "Le c devant i se prononce /s/.",
+                  "aValider": false
+                },
+                {
+                  "debut": 5,
+                  "lettres": "eu",
+                  "texte": "eu se prononce /ø/ comme dans « peur ».",
+                  "aValider": false
+                },
+                {
+                  "debut": 7,
+                  "lettres": "x",
+                  "texte": "Le x final ne se prononce pas",
+                  "aValider": false
+                }
+              ],
+              "astuce": "Le c devant i se prononce /s/. eu se prononce /ø/ comme dans « peur ». Le x final ne se prononce pas",
+              "famille": "",
+              "phrase": "Ce bijou est très précieux pour elle."
+            },
+            {
+              "mot": "précieuse",
+              "syllabes": "pré/ci/euse",
+              "pieges": [
+                3,
+                5,
+                6,
+                7,
+                8
+              ],
+              "groupesLoupe": [
+                [
+                  3
+                ],
+                [
+                  5,
+                  6
+                ],
+                [
+                  7
+                ],
+                [
+                  8
+                ]
+              ],
+              "astucesLoupe": [],
+              "astuce": "attention aux lettres muettes",
+              "famille": "précieux",
+              "phrase": "Cette montre est vraiment précieuse."
+            },
+            {
+              "mot": "dans",
+              "syllabes": "dans",
+              "pieges": [
+                1,
+                2,
+                3
+              ],
+              "groupesLoupe": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  3
+                ]
+              ],
+              "astucesLoupe": [
+                {
+                  "debut": 1,
+                  "lettres": "an",
+                  "texte": "An de 40",
+                  "aValider": false
+                },
+                {
+                  "debut": 3,
+                  "lettres": "s",
+                  "texte": "Le s final est muet",
+                  "aValider": false
+                }
+              ],
+              "astuce": "An de 40 Le s final est muet",
+              "famille": "",
+              "phrase": "Le chat est caché dans la boîte."
+            }
+          ],
+          "phrases": [
+            "Dans la petite ville, une bibliothèque accueille les enfants curieux chaque après‑midi.",
+            "Le vieux manuscrit repose sur la table près de la musique douce.",
+            "Une mosquée se dresse au bord du fleuve, près de la justice.",
+            "La médecine ancienne évoque des remèdes précieux pour les malades.",
+            "Chaque soir, la musique résonne dans la salle de la bibliothèque.",
+            "Le juge parle de justice et de lois avec un ton précieux.",
+            "Dans le jardin, on trouve un livre rare et une précieuse histoire."
+          ],
+          "etapes": {}
+        }
+      ]
     },
     {
       "id": 3,
@@ -111,5 +775,5 @@
       "listes": []
     }
   ],
-  "publieLe": "2026-11-16T18:17:10.054Z"
+  "publieLe": "2026-11-17T19:13:49.248Z"
 }
